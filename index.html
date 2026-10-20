@@ -4,1056 +4,896 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AI in Therapy</title>
-<meta name="description" content="A presentation on where AI actually sits in mental health care: the access gap, what is deployed today, the Talkspace Tee case, the evidence, and the regulation.">
+<meta name="description" content="AI in Therapy. A presentation for Leading in the Age of AI, NYU Stern.">
 <meta property="og:title" content="AI in Therapy">
-<meta property="og:description" content="Where AI actually sits in mental health care. NYU Stern, Leading in the Age of AI.">
-<meta property="og:type" content="website">
+<meta property="og:description" content="Where AI actually sits in mental health care. NYU Stern.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23BF3F22'/><rect x='18' y='46' width='64' height='8' fill='%23EEF0EC'/><rect x='46' y='18' width='8' height='64' fill='%23EEF0EC'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300..800;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300..700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* ═══════════════════════════════════════════════════════════════════
-   AI in Therapy — a clinical report, set large.
-   Printed language: flat fields, hairlines, hatching, stamps.
-   ═══════════════════════════════════════════════════════════════════ */
 :root{
-  --paper:#EEF0EC;
-  --bone:#E3E7E0;
-  --ink:#15181A;
-  --ink-70:#4A5150;
-  --clay:#BF3F22;
-  --clay-deep:#9A3119;
-  --sea:#10443C;
-  --white:#FBFCFA;
-
-  --rule:rgba(21,24,26,.16);
-  --rule-2:rgba(21,24,26,.34);
-  --rule-inv:rgba(251,252,250,.22);
-
-  --hatch:repeating-linear-gradient(135deg,rgba(191,63,34,.55) 0 1.5px,transparent 1.5px 7px);
-  --hatch-ink:repeating-linear-gradient(135deg,rgba(21,24,26,.3) 0 1.5px,transparent 1.5px 7px);
-
+  --paper:#EEF0EC; --bone:#E2E6DF; --ink:#15181A; --ink-70:#505756;
+  --clay:#BF3F22; --sea:#10443C; --white:#FBFCFA;
+  --rule:rgba(21,24,26,.16); --rule-2:rgba(21,24,26,.36); --rule-inv:rgba(251,252,250,.26);
+  --hatch:repeating-linear-gradient(135deg,rgba(191,63,34,.5) 0 1.5px,transparent 1.5px 7px);
   --disp:"Archivo","Arial Narrow",Helvetica,sans-serif;
   --text:"Public Sans",-apple-system,"Segoe UI",Helvetica,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-
-  --gut:clamp(20px,5vw,76px);
-  --head:42px;
+  --pad:clamp(22px,5vw,88px);
   --eo:cubic-bezier(.2,.9,.2,1);
-  --ei:cubic-bezier(.7,0,.3,1);
+  --drop:cubic-bezier(.16,.84,.3,1.12);
+  --bg:var(--paper); --fg:var(--ink); --dim:var(--ink-70); --line:var(--rule);
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:var(--head)}
+html,body{height:100%;margin:0;overflow:hidden}
 body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--text);font-size:clamp(16px,1.05vw,18px);line-height:1.58;font-weight:380;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:var(--bg);color:var(--fg);font-family:var(--text);
+  font-size:clamp(15px,1vw,17px);line-height:1.5;font-weight:380;
+  -webkit-font-smoothing:antialiased;transition:background .5s var(--eo),color .5s var(--eo);
 }
-h1,h2,h3,h4,p,ul,ol,li,figure,dl,dd,dt{margin:0;padding:0}
+h1,h2,h3,h4,p,ul,ol,li{margin:0;padding:0}
 ul,ol{list-style:none}
-a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule-2);transition:border-color .18s,color .18s}
-a:hover{color:var(--clay);border-bottom-color:var(--clay)}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;border-bottom:1px solid var(--rule-2);text-decoration:none}
+a:hover{color:var(--clay);border-bottom-color:var(--clay)}
 :focus-visible{outline:2px solid var(--clay);outline-offset:3px}
-sup{font-family:var(--mono);font-size:.62em;font-weight:500;color:var(--clay);vertical-align:super;line-height:0}
+sup{font-family:var(--mono);font-size:.58em;font-weight:500;color:var(--clay);vertical-align:super;line-height:0}
 
-/* ── type ──────────────────────────────────────────────────────── */
-.giant,.h2,.h3{font-family:var(--disp);font-weight:800;font-variation-settings:"wdth" 74,"wght" 800;letter-spacing:-.022em;text-transform:uppercase}
-.giant{font-size:clamp(3.1rem,13.2vw,9.6rem);line-height:.84}
-.h2{font-size:clamp(2rem,5.4vw,4.2rem);line-height:.9}
-.h3{font-size:clamp(1.3rem,2.2vw,1.9rem);line-height:.98;font-variation-settings:"wdth" 80,"wght" 700}
-.lab{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;line-height:1.5}
-.lab--clay{color:var(--clay)}
-.lead{font-size:clamp(1.12rem,1.75vw,1.5rem);line-height:1.42;font-weight:350;letter-spacing:-.012em;max-width:30ch}
-.say{font-size:1.02em;line-height:1.56;max-width:60ch;color:var(--ink)}
-.dim{color:var(--ink-70)}
-.fig{font-family:var(--disp);font-variation-settings:"wdth" 64,"wght" 800;letter-spacing:-.03em;line-height:.82;
-  font-size:clamp(3.4rem,7.6vw,6.4rem);font-variant-numeric:tabular-nums}
-.fig--clay{color:var(--clay)}
-.cite{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--ink-70);text-transform:uppercase}
+/* ── type ─────────────────────────────────────────────────────── */
+.ttl,.hd,.sub{font-family:var(--disp);text-transform:uppercase;font-weight:800;letter-spacing:-.025em}
+.ttl{font-size:min(17vw,15vh);line-height:.82;font-variation-settings:"wdth" 72,"wght" 800}
+.hd{font-size:min(7.4vw,8.6vh);line-height:.9;font-variation-settings:"wdth" 76,"wght" 800}
+.sub{font-size:min(3.4vw,4.4vh);line-height:.98;font-variation-settings:"wdth" 82,"wght" 700;letter-spacing:-.015em}
+.fig{font-family:var(--disp);font-variation-settings:"wdth" 64,"wght" 800;letter-spacing:-.035em;
+  font-size:min(20vw,26vh);line-height:.78;font-variant-numeric:tabular-nums}
+.lab{font-family:var(--mono);font-size:clamp(.62rem,.78vw,.76rem);font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.say{font-size:clamp(.98rem,1.25vw,1.3rem);line-height:1.42;font-weight:350;max-width:30ch}
+.sm{font-size:clamp(.82rem,1vw,1rem);line-height:1.4}
+.dimc{color:var(--dim)}
+.clay{color:var(--clay)}
+.seac{color:var(--sea)}
 
-/* ── fields & grid ─────────────────────────────────────────────── */
-.field{position:relative;padding-inline:var(--gut);padding-block:clamp(60px,9vh,132px);border-top:1px solid var(--rule)}
-.field > .in{max-width:1340px;margin-inline:auto;width:100%}
-.sea{background:var(--sea);color:var(--white);border-top-color:transparent}
-.sea .dim,.sea .cite{color:rgba(251,252,250,.66)}
-.sea a{border-bottom-color:var(--rule-inv)}
-.sea a:hover{color:var(--white);border-bottom-color:var(--white)}
-.inkf{background:var(--ink);color:var(--white);border-top-color:transparent}
-.inkf .dim,.inkf .cite{color:rgba(251,252,250,.6)}
-.bonef{background:var(--bone)}
-.gr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(16px,2vw,30px)}
-.c12{grid-column:span 12}.c8{grid-column:span 12}.c7{grid-column:span 12}.c6{grid-column:span 12}
-.c5{grid-column:span 12}.c4{grid-column:span 12}.c3{grid-column:span 12}
-@media (min-width:760px){
-  .c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}
-  .c5{grid-column:span 5}.c4{grid-column:span 6}.c3{grid-column:span 6}
+/* ── deck shell ───────────────────────────────────────────────── */
+#deck{position:fixed;inset:0;overflow:hidden}
+.sl{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--pad) + env(safe-area-inset-top,0px)) var(--pad) calc(var(--pad) + 46px);
+  opacity:0;visibility:hidden;transform:translateY(26px);pointer-events:none;overflow:hidden;
 }
-@media (min-width:1080px){.c4{grid-column:span 4}.c3{grid-column:span 3}}
-.stack{display:flex;flex-direction:column;gap:clamp(18px,2.6vh,32px)}
-.stack--s{gap:12px}
-.hr{height:1px;background:var(--rule);border:0;width:100%}
-.sea .hr,.inkf .hr{background:var(--rule-inv)}
+.sl.on{opacity:1;visibility:visible;transform:none;pointer-events:auto;
+  transition:opacity .42s var(--eo),transform .52s var(--eo)}
+.sl.out{visibility:visible;opacity:0;transform:translateY(-22px);transition:opacity .3s ease-in,transform .34s var(--eo)}
+.sl.dark{background:var(--ink);--bg:var(--ink)}
+.sl.sea{background:var(--sea);--bg:var(--sea)}
+.sl.bone{background:var(--bone);--bg:var(--bone)}
+.sl.dark,.sl.sea{--fg:var(--white);--dim:rgba(251,252,250,.68);--line:var(--rule-inv);color:var(--white)}
+.sl.dark .lab,.sl.sea .lab{color:rgba(251,252,250,.72)}
+.sl > *{flex:0 0 auto}
+.grow{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.sl.on [data-s]{animation:si .62s var(--eo) both;animation-delay:calc(var(--i,0) * 90ms + 120ms)}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.top{display:flex;align-items:baseline;gap:14px;margin-bottom:min(4.4vh,42px)}
+.top .n{color:var(--clay)}
+.sl.dark .top .n,.sl.sea .top .n{color:var(--white)}
+.top .ln{flex:1;height:1px;background:var(--line)}
+.foot{position:absolute;left:var(--pad);right:var(--pad);bottom:calc(14px + env(safe-area-inset-bottom,0px) + 32px);
+  display:flex;gap:18px;justify-content:space-between;align-items:baseline;color:var(--dim)}
+.cols{display:flex;gap:clamp(18px,3vw,56px);align-items:flex-start;flex-wrap:wrap}
+.col{flex:1 1 220px;min-width:0}
 
-/* ── running head ──────────────────────────────────────────────── */
-#rh{position:fixed;inset:0 0 auto;z-index:40;height:calc(var(--head) + env(safe-area-inset-top,0px));
-  padding:env(safe-area-inset-top,0px) var(--gut) 0;display:flex;align-items:center;gap:14px;
-  background:var(--paper);border-bottom:1px solid var(--rule);transition:background .3s,color .3s,border-color .3s}
-#rh.onfield{background:var(--ink);color:var(--white);border-bottom-color:transparent}
-#rh .t{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
-#rh .s{margin-left:auto;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.7}
-#prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:41;background:transparent}
-#prog i{display:block;height:100%;background:var(--clay);transform:scaleX(0);transform-origin:left}
-main{padding-top:var(--head)}
+/* ── hud ──────────────────────────────────────────────────────── */
+#bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:30;background:transparent}
+#bar i{display:block;height:100%;background:var(--clay);transform-origin:left;transform:scaleX(0);
+  transition:transform .5s var(--eo)}
+#hud{position:fixed;left:0;right:0;bottom:0;z-index:30;height:calc(40px + env(safe-area-inset-bottom,0px));
+  padding:0 var(--pad) env(safe-area-inset-bottom,0px);display:flex;align-items:center;gap:16px;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);border-top:1px solid var(--line);background:var(--bg);
+  transition:background .5s var(--eo),color .5s var(--eo),border-color .5s var(--eo)}
+#hud .nm{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#hud .rt{margin-left:auto;display:flex;align-items:center;gap:6px}
+#hud button{padding:6px 10px;line-height:1;transition:color .18s,background .18s}
+#hud button:hover{background:var(--fg);color:var(--bg)}
+#hud .ct{font-variant-numeric:tabular-nums;color:var(--fg)}
+body.dark{--bg:var(--ink);--fg:var(--white);--dim:rgba(251,252,250,.66);--line:var(--rule-inv)}
+body.sea{--bg:var(--sea);--fg:var(--white);--dim:rgba(251,252,250,.66);--line:var(--rule-inv)}
+body.bone{--bg:var(--bone)}
 
-/* ── section opener ────────────────────────────────────────────── */
-.open{display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);margin-bottom:clamp(30px,5vh,64px)}
-.open .idx{display:flex;align-items:baseline;gap:14px}
-.open .idx .n{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.14em;color:var(--clay)}
-.open .idx .l{flex:1;height:1px;background:var(--rule);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--eo)}
-.sea .open .idx .l,.inkf .open .idx .l{background:var(--rule-inv)}
-.in.vis .open .idx .l{transform:scaleX(1)}
-.sea .open .idx .n,.inkf .open .idx .n{color:var(--white)}
+/* ── notes ────────────────────────────────────────────────────── */
+#notes{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--ink);color:var(--white);
+  max-height:min(52vh,460px);overflow:auto;transform:translateY(101%);transition:transform .42s var(--eo);
+  padding:22px var(--pad) calc(22px + 40px + env(safe-area-inset-bottom,0px));border-top:3px solid var(--clay)}
+#notes.open{transform:none}
+#notes h4{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(251,252,250,.6);margin-bottom:12px}
+#notes .nb{display:grid;grid-template-columns:1fr;gap:9px;max-width:1100px}
+@media (min-width:860px){#notes .nb{grid-template-columns:1fr 1fr;gap:9px 48px}}
+#notes li{position:relative;padding-left:26px;font-size:.92rem;line-height:1.45;color:rgba(251,252,250,.92)}
+#notes li::before{content:"";position:absolute;left:0;top:.7em;width:14px;height:1px;background:var(--clay)}
+#notes li b{font-weight:600}
+#notes .src{margin-top:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:rgba(251,252,250,.5)}
+.nt{display:none}
 
-/* ── masked line rise (the one motion idiom) ──────────────────── */
-.rise{display:block;overflow:hidden}
-.rise > span{display:block;will-change:transform}
-html.anim .rise > span{transform:translateY(106%)}
-html.anim .vis .rise > span,html.anim .rise.vis > span{transform:none;transition:transform .66s var(--eo) calc(var(--d,0) * 85ms)}
-html.anim [data-fade]{opacity:0}
-html.anim .vis [data-fade],html.anim [data-fade].vis{opacity:1;transition:opacity .6s var(--eo) calc(var(--d,0) * 85ms)}
-
-/* ── hero ──────────────────────────────────────────────────────── */
-#hero{padding-block:clamp(40px,7vh,96px) clamp(40px,7vh,90px);border-top:0;min-height:calc(100svh - var(--head));
-  display:flex;align-items:center}
-.ttl{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(2px,.4vw,6px)}
-.ttl .band{background:var(--clay);color:var(--white);padding:.04em .16em .1em;overflow:hidden;
-  transform-origin:left;transition:transform .55s var(--ei) .28s}
-html.anim .ttl .band{transform:scaleX(0)}
-html.anim .vis .ttl .band{transform:scaleX(1)}
-.ttl .band > span{display:block;transition:transform .66s var(--eo) .5s}
-.strip{display:grid;grid-template-columns:1fr;border-top:1px solid var(--rule-2)}
-@media (min-width:720px){.strip{grid-template-columns:repeat(3,1fr)}}
-.strip > div{padding:18px 0 0;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid var(--rule);padding-bottom:18px}
-@media (min-width:720px){
-  .strip > div{padding:20px clamp(16px,2vw,28px) 4px;border-bottom:0;border-left:1px solid var(--rule)}
-  .strip > div:first-child{padding-left:0;border-left:0}
-}
-.strip .n{font-family:var(--disp);font-variation-settings:"wdth" 68,"wght" 800;font-size:clamp(2.2rem,4.4vw,3.4rem);line-height:.86;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.strip .k{font-size:.94rem;line-height:1.4;max-width:30ch}
-.keys{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
-kbd{font-family:var(--mono);font-size:.66rem;border:1px solid var(--rule-2);padding:2px 6px;letter-spacing:.06em}
-
-/* ── tally band (the gap) ──────────────────────────────────────── */
-.tally{display:flex;gap:2px;height:clamp(84px,13vh,150px);align-items:stretch;width:100%}
-@media (max-width:700px){.tally{gap:1px;height:92px}}
-.tally i{flex:1 1 0;background:var(--sea);transition:background .42s var(--ei),box-shadow .42s var(--ei);
-  transition-delay:calc(var(--k) * 7ms)}
-.tally.go i.off{background:var(--bone);box-shadow:inset 0 0 0 1px rgba(191,63,34,.22)}
-.tallywrap{position:relative}
-.tallywrap .hatchover{position:absolute;inset:0;left:51%;background:var(--hatch);opacity:0;transition:opacity .5s var(--eo) .55s;pointer-events:none}
-.tally.go ~ .hatchover{opacity:1}
-.tagline{display:flex;justify-content:space-between;gap:16px;padding-top:10px;border-top:1px solid var(--rule-2);margin-top:12px}
-
-/* ── printed table ─────────────────────────────────────────────── */
-.tbl{width:100%;border-collapse:collapse;font-size:.95rem}
-.tbl th{text-align:left;font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-70);padding:0 18px 10px 0;border-bottom:1px solid var(--rule-2);vertical-align:bottom}
-.tbl td{padding:16px 18px 16px 0;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.45}
-.tbl tr:last-child td{border-bottom:1px solid var(--rule-2)}
-.tbl .nm{font-family:var(--disp);font-variation-settings:"wdth" 82,"wght" 700;text-transform:uppercase;
-  font-size:1.02rem;letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
-.tbl .ex{font-family:var(--mono);font-size:.78rem;letter-spacing:.01em}
-.tbl .lim{color:var(--clay)}
-.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-@media (max-width:860px){.tbl{min-width:680px}}
-
-/* ── two paths ─────────────────────────────────────────────────── */
-.paths{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule-2)}
-@media (min-width:860px){.paths{grid-template-columns:1fr 1fr}}
-.path{padding:clamp(20px,2.4vw,32px) 0;border-bottom:1px solid var(--rule)}
-@media (min-width:860px){
-  .path{padding-inline:0 clamp(24px,3vw,46px)}
-  .path + .path{padding-inline:clamp(24px,3vw,46px) 0;border-left:1px solid var(--rule)}
-}
-.path h4{display:flex;align-items:baseline;gap:12px;margin-bottom:18px}
-.gate{display:grid;grid-template-columns:30px 1fr;align-items:start;gap:14px;padding-block:11px;opacity:.3;transition:opacity .3s var(--eo)}
-.gate.on{opacity:1}
-.gate .mk{font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--ink-70);padding-top:3px;position:relative}
-.gate .mk::after{content:"";position:absolute;left:3px;top:22px;bottom:-16px;width:1px;background:var(--rule)}
-.gate:last-of-type .mk::after{display:none}
-.gate .g{font-size:.97rem;line-height:1.4}
-.gate.on .mk{color:var(--clay)}
-.path.tee .gate.on .mk{color:var(--sea)}
-.gate.on .g b{box-shadow:inset 0 -.42em 0 rgba(191,63,34,.16)}
-.path.tee .gate.on .g b{box-shadow:inset 0 -.42em 0 rgba(16,68,60,.14)}
-.result{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule-2);opacity:0;transition:opacity .4s var(--eo)}
-.result.on{opacity:1}
-.result .big{font-family:var(--disp);font-variation-settings:"wdth" 72,"wght" 800;text-transform:uppercase;
-  font-size:clamp(1.2rem,2.3vw,1.8rem);line-height:1;letter-spacing:-.02em}
-.result.slow .big{color:var(--clay)}
-.result.fast .big{color:var(--sea)}
-.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.7rem;font-weight:500;
-  letter-spacing:.14em;text-transform:uppercase;padding:12px 18px;background:var(--ink);color:var(--white);
+/* ── hero ─────────────────────────────────────────────────────── */
+#s0{justify-content:center}
+#s0 .grow{padding-bottom:min(20vh,172px)}
+.wordwrap{overflow:hidden;display:block}
+.word{display:block;transform:translateY(-130%);opacity:0}
+.sl.on .word{animation:fall .9s var(--drop) both;animation-delay:calc(var(--i,0) * 110ms + 150ms)}
+@keyframes fall{from{transform:translateY(-130%);opacity:0}60%{opacity:1}to{transform:translateY(0);opacity:1}}
+.band{background:var(--clay);color:var(--white);padding:0 .1em .06em;display:inline-block}
+#rain{position:absolute;left:0;right:0;bottom:calc(46px + env(safe-area-inset-bottom,0px));height:min(22vh,180px);
+  display:flex;align-items:flex-end;gap:2px;padding-inline:var(--pad);pointer-events:none}
+#rain i{flex:1 1 0;background:var(--sea);transform:translateY(-140vh);opacity:.9}
+#rain i.c{background:var(--clay)}
+.sl.on #rain i{animation:rain 1.05s var(--drop) both;animation-delay:calc(var(--k) * 14ms + 260ms)}
+@keyframes rain{to{transform:none}}
+.enter{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;padding:14px 22px;background:var(--ink);color:var(--white);
   transition:background .18s,transform .12s var(--eo)}
-.btn:hover{background:var(--clay)}
+.enter:hover{background:var(--clay)}
+.enter:active{transform:translateY(1px)}
+
+/* ── bar field (the gap) ──────────────────────────────────────── */
+.field100{display:flex;gap:2px;height:min(30vh,240px);align-items:stretch}
+.field100 i{flex:1 1 0;background:var(--sea);transform:scaleY(.12);transform-origin:bottom;
+  transition:transform .5s var(--drop),background .4s var(--eo),box-shadow .4s var(--eo);
+  transition-delay:calc(var(--k) * 9ms)}
+.sl.on .field100 i{transform:scaleY(1)}
+.sl.on .field100 i.off{background:var(--bone);box-shadow:inset 0 0 0 1px rgba(191,63,34,.3);
+  transition-delay:calc(var(--k) * 9ms + 650ms)}
+.hatchbox{position:relative}
+.hatchbox .hb{position:absolute;inset:0;left:51%;background:var(--hatch);opacity:0;
+  transition:opacity .5s var(--eo) 1.5s;pointer-events:none}
+.sl.on .hatchbox .hb{opacity:1}
+
+/* ── big rows (landscape) ─────────────────────────────────────── */
+.rows{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.row{display:flex;gap:clamp(12px,2.4vw,40px);align-items:baseline;padding:min(1.9vh,20px) 0;border-bottom:1px solid var(--line)}
+.row .r1{flex:0 0 min(30%,290px);font-family:var(--disp);font-variation-settings:"wdth" 78,"wght" 700;
+  text-transform:uppercase;font-size:min(2.5vw,3.1vh);line-height:1;letter-spacing:-.015em}
+.row .r2{flex:1 1 160px;font-size:clamp(.84rem,1.05vw,1.05rem);color:var(--dim)}
+.row .r3{flex:0 0 min(32%,330px);font-size:clamp(.84rem,1.05vw,1.05rem);color:var(--clay)}
+@media (max-width:760px){.row{flex-wrap:wrap;gap:4px}.row .r1,.row .r2,.row .r3{flex:1 1 100%}}
+
+/* ── paths ────────────────────────────────────────────────────── */
+.paths{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+@media (min-width:820px){.paths{grid-template-columns:1fr 1fr}}
+.pth{padding:min(2.4vh,26px) 0;border-bottom:1px solid var(--line)}
+@media (min-width:820px){
+  .pth{padding-right:clamp(20px,3vw,52px)}
+  .pth + .pth{padding-right:0;padding-left:clamp(20px,3vw,52px);border-left:1px solid var(--line)}
+}
+.gate{display:flex;gap:14px;align-items:baseline;padding:min(1.25vh,13px) 0;opacity:.26;transition:opacity .3s var(--eo)}
+.gate.on{opacity:1}
+.gate .mk{font-family:var(--mono);font-size:.66rem;font-weight:500;color:var(--dim);flex:0 0 auto}
+.gate.on .mk{color:var(--clay)}
+.pth.tee .gate.on .mk{color:var(--sea)}
+.sl.dark .pth.tee .gate.on .mk{color:#7FD9C4}
+.gate .g{font-size:clamp(.92rem,1.15vw,1.15rem)}
+.verdict{margin-top:min(2vh,20px);padding-top:12px;border-top:1px solid var(--line);opacity:0;transition:opacity .4s var(--eo)}
+.verdict.on{opacity:1}
+.verdict .v{font-family:var(--disp);font-variation-settings:"wdth" 74,"wght" 800;text-transform:uppercase;
+  font-size:min(2.6vw,3.4vh);line-height:1;letter-spacing:-.02em}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.68rem;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;padding:11px 16px;background:var(--ink);color:var(--white);
+  transition:background .18s,transform .12s var(--eo)}
+.sl.dark .btn,.sl.sea .btn{background:var(--white);color:var(--ink)}
+.btn:hover{background:var(--clay);color:var(--white)}
 .btn:active{transform:translateY(1px)}
 .btn[disabled]{opacity:.45;cursor:default}
-.btn--out{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule-2)}
-.btn--out:hover{background:var(--ink);color:var(--white);box-shadow:none}
-.sea .btn--out,.inkf .btn--out{color:var(--white);box-shadow:inset 0 0 0 1px var(--rule-inv)}
-.sea .btn--out:hover{background:var(--white);color:var(--sea)}
 
-/* ── block diagram ────────────────────────────────────────────── */
-.diag{border:1px solid var(--rule-2);background:var(--paper)}
-.diag .top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px clamp(14px,1.8vw,20px);border-bottom:1px solid var(--rule)}
-.pick{font-family:var(--text);font-size:.9rem;padding:9px 14px;box-shadow:inset 0 0 0 1px var(--rule-2);
-  transition:background .18s,color .18s,box-shadow .18s;text-align:left}
-.pick:hover{box-shadow:inset 0 0 0 1px var(--ink)}
-.pick[aria-pressed="true"]{background:var(--ink);color:var(--white);box-shadow:none}
-.pick.alarm[aria-pressed="true"]{background:var(--clay)}
-.flow{display:flex;flex-direction:column;padding:clamp(16px,2.2vw,28px)}
-@media (min-width:1000px){.flow{flex-direction:row;align-items:stretch}}
-.blk{flex:1 1 0;min-width:0;border:1px solid var(--rule-2);padding:14px 16px 16px;background:var(--paper);
-  display:flex;flex-direction:column;gap:8px;transition:background .3s,border-color .3s,color .3s}
-.blk .bl{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-70)}
-.blk .bt{font-family:var(--disp);font-variation-settings:"wdth" 80,"wght" 700;text-transform:uppercase;font-size:1.02rem;line-height:1.05;letter-spacing:-.01em}
-.blk .bd{font-size:.84rem;line-height:1.42;color:var(--ink-70)}
-.blk.lit{background:var(--ink);border-color:var(--ink);color:var(--white)}
-.blk.lit .bl,.blk.lit .bd{color:rgba(251,252,250,.68)}
+/* ── ladder ───────────────────────────────────────────────────── */
+.ladder{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:820px){.ladder{grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,28px)}}
+.rung{border:1px solid var(--line);padding:clamp(16px,2.4vh,30px);display:flex;flex-direction:column;gap:8px;min-height:min(26vh,210px);justify-content:flex-end}
+.rung.mid{background:var(--clay);border-color:var(--clay);color:var(--white)}
+.rung.mid .lab{color:rgba(251,252,250,.8)}
+.rung .t{font-family:var(--disp);font-variation-settings:"wdth" 78,"wght" 700;text-transform:uppercase;
+  font-size:min(2.3vw,3vh);line-height:1.02;letter-spacing:-.015em}
+
+/* ── pipeline ─────────────────────────────────────────────────── */
+.pick{font-size:clamp(.82rem,1vw,1rem);padding:9px 13px;box-shadow:inset 0 0 0 1px var(--line);text-align:left;
+  transition:background .18s,color .18s,box-shadow .18s}
+.pick:hover{box-shadow:inset 0 0 0 1px var(--fg)}
+.pick[aria-pressed="true"]{background:var(--fg);color:var(--bg);box-shadow:none}
+.pick.alarm[aria-pressed="true"]{background:var(--clay);color:var(--white)}
+.flow{display:flex;flex-direction:column}
+@media (min-width:980px){.flow{flex-direction:row;align-items:stretch}}
+.blk{flex:1 1 0;min-width:0;border:1px solid var(--line);padding:clamp(11px,1.6vh,18px);
+  display:flex;flex-direction:column;gap:6px;transition:background .3s,border-color .3s,color .3s}
+.blk .bl{font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.blk .bt{font-family:var(--disp);font-variation-settings:"wdth" 80,"wght" 700;text-transform:uppercase;
+  font-size:clamp(.95rem,1.35vw,1.25rem);line-height:1.04;letter-spacing:-.01em}
+.blk.lit{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.blk.lit .bl,.blk.lit .dimc,.blk.lit .readout{color:inherit;opacity:.7}
 .blk.flag{background:var(--clay);border-color:var(--clay);color:var(--white)}
-.blk.flag .bl,.blk.flag .bd{color:rgba(251,252,250,.8)}
-.wire{position:relative;flex:0 0 26px;display:flex;align-items:center;justify-content:center}
-.wire .ln{position:absolute;background:var(--rule-2);left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
-.wire .fl{position:absolute;background:var(--ink);left:50%;top:0;width:1px;height:100%;transform:translateX(-.5px) scaleY(0);transform-origin:top;transition:transform .36s linear}
+.blk.flag .bl{color:rgba(251,252,250,.8)}
+.wire{position:relative;flex:0 0 22px;min-height:22px}
+.wire .ln,.wire .fl{position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
+.wire .ln{background:var(--line)}
+.wire .fl{background:var(--fg);transform:translateX(-.5px) scaleY(0);transform-origin:top;transition:transform .34s linear}
 .wire.on .fl{transform:translateX(-.5px) scaleY(1)}
-.wire .hd{position:absolute;bottom:-1px;left:50%;translate:-50% 0;width:0;height:0;
-  border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--rule-2)}
-.wire.on .hd{border-top-color:var(--ink)}
-@media (min-width:1000px){
-  .flow > .wire{flex:0 0 clamp(22px,2.4vw,44px)}
+@media (min-width:980px){
+  .flow > .wire{flex:0 0 clamp(18px,2.2vw,40px);min-height:0}
   .wire .ln,.wire .fl{left:0;right:0;top:50%;bottom:auto;width:auto;height:1px;transform:translateY(-.5px)}
   .wire .fl{transform:translateY(-.5px) scaleX(0);transform-origin:left}
   .wire.on .fl{transform:translateY(-.5px) scaleX(1)}
-  .wire .hd{bottom:auto;right:-1px;left:auto;top:50%;translate:0 -50%;
-    border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid var(--rule-2);border-right:0}
-  .wire.on .hd{border-left-color:var(--ink);border-top-color:transparent}
 }
-.agents{display:flex;flex-direction:column;gap:5px;margin-top:4px}
-.agents li{font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;
-  padding:5px 8px;box-shadow:inset 0 0 0 1px var(--rule);color:var(--ink-70);transition:all .22s}
-.blk.lit .agents li{box-shadow:inset 0 0 0 1px var(--rule-inv);color:rgba(251,252,250,.5)}
-.blk.lit .agents li.on{background:var(--white);color:var(--ink);box-shadow:none}
+.agents{display:flex;flex-direction:column;gap:4px;margin-top:2px}
+.agents li{font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;padding:4px 7px;
+  box-shadow:inset 0 0 0 1px var(--line);color:var(--dim);transition:all .22s}
+.blk.lit .agents li{box-shadow:inset 0 0 0 1px currentColor;color:inherit;opacity:.52}
+.blk.lit .agents li.on{background:var(--bg);color:var(--fg);opacity:1;box-shadow:none}
 .agents li.hot{background:var(--clay);color:var(--white);box-shadow:none}
-.escal{position:relative;border-top:1px solid var(--rule);padding:clamp(16px,2.2vw,28px)}
-.escal .inner{display:grid;grid-template-columns:1fr;gap:16px;opacity:.42;transition:opacity .34s var(--eo)}
-@media (min-width:860px){.escal .inner{grid-template-columns:auto 1fr;align-items:center;gap:clamp(20px,3vw,44px)}}
-.escal.live .inner{opacity:1}
-.stamp{position:relative;display:inline-flex;align-items:center;justify-content:center;text-align:center;
-  font-family:var(--mono);font-size:clamp(.66rem,1.1vw,.8rem);font-weight:500;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--clay);border:2px solid var(--clay);padding:14px 20px;line-height:1.3;max-width:260px;
-  transform:rotate(-2.4deg) scale(1.5);opacity:0}
-.escal.live .stamp{transform:rotate(-2.4deg) scale(1);opacity:1;transition:transform .22s var(--eo) .1s,opacity .16s linear .1s}
-.readout{font-size:.95rem;line-height:1.5;min-height:4.4em}
-.readout b{font-weight:600}
+.escal{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(16px,3vw,44px);margin-top:min(2.6vh,26px);
+  padding-top:min(2.4vh,24px);border-top:1px solid var(--line);opacity:.4;transition:opacity .34s var(--eo)}
+.escal.live{opacity:1}
+.stamp{font-family:var(--mono);font-size:clamp(.62rem,.85vw,.78rem);font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--clay);border:2px solid var(--clay);padding:12px 18px;line-height:1.3;
+  text-align:center;transform:rotate(-2.4deg) scale(1.55);opacity:0}
+.escal.live .stamp{transform:rotate(-2.4deg) scale(1);opacity:1;
+  transition:transform .22s var(--eo) .08s,opacity .14s linear .08s}
+.readout{font-size:clamp(.88rem,1.1vw,1.08rem);line-height:1.42;max-width:46ch;min-height:2.9em;color:var(--dim)}
 
-/* ── printed bars ─────────────────────────────────────────────── */
-.bars{display:flex;flex-direction:column;gap:16px}
-.bar .bl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px}
-.bar .bl .v{font-family:var(--disp);font-variation-settings:"wdth" 70,"wght" 800;font-size:1.5rem;line-height:1;letter-spacing:-.02em}
-.bar .tr{height:22px;background:var(--bone)}
+/* ── bars ─────────────────────────────────────────────────────── */
+.bars{display:flex;flex-direction:column;gap:clamp(12px,2vh,22px)}
+.bar .bl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px}
+.bar .bl .v{font-family:var(--disp);font-variation-settings:"wdth" 70,"wght" 800;font-size:min(3.4vw,4.4vh);line-height:1;letter-spacing:-.025em}
+.bar .tr{height:clamp(16px,3vh,30px);background:var(--bone)}
+.sl.dark .bar .tr{background:rgba(251,252,250,.12)}
 .bar .tr i{display:block;height:100%;background:var(--sea);transform:scaleX(0);transform-origin:left;
-  transition:transform .85s var(--ei) .1s}
-.bar.b2 .tr i{background:var(--bone);box-shadow:inset 0 0 0 1px var(--rule-2);background-image:var(--hatch-ink)}
-.vis .bar .tr i{transform:scaleX(var(--w,1))}
+  transition:transform .9s var(--eo) .35s}
+.sl.dark .bar .tr i{background:#2E8F7C}
+.bar.b2 .tr i{background:transparent;box-shadow:inset 0 0 0 1px var(--rule-2);background-image:var(--hatch)}
+.sl.on .bar .tr i{transform:scaleX(var(--w,1))}
 
-/* ── numbered blocks ──────────────────────────────────────────── */
-.blocks{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule-2)}
-@media (min-width:860px){.blocks{grid-template-columns:1fr 1fr}}
-.block{padding:clamp(22px,2.6vw,34px) 0;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:12px}
-@media (min-width:860px){
-  .block{padding-right:clamp(24px,3vw,48px)}
-  .block:nth-child(even){padding-right:0;padding-left:clamp(24px,3vw,48px);border-left:1px solid var(--rule)}
-}
-.block .q{display:flex;gap:14px;align-items:baseline}
-.block .q .n{font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--clay);letter-spacing:.1em}
-.pts{display:flex;flex-direction:column;gap:10px}
-.pts li{position:relative;padding-left:30px;font-size:.95rem;line-height:1.45}
-.pts li::before{content:"";position:absolute;left:0;top:.72em;width:18px;height:1px;background:var(--rule-2)}
-.pts li b{font-weight:600}
-.pts--clay li::before{background:var(--clay)}
-.sea .pts li::before,.inkf .pts li::before{background:var(--rule-inv)}
-.num-list{counter-reset:nl;display:flex;flex-direction:column;gap:14px}
-.num-list li{counter-increment:nl;position:relative;padding-left:36px;font-size:.96rem;line-height:1.45;
-  padding-bottom:14px;border-bottom:1px solid var(--rule)}
-.num-list li:last-child{border-bottom:0;padding-bottom:0}
-.num-list li::before{content:counter(nl,decimal-leading-zero);position:absolute;left:0;top:.3em;
-  font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--clay);letter-spacing:.06em}
-.num-list li b{font-weight:600;display:block}
-
-/* ── evidence split ───────────────────────────────────────────── */
-.split{display:grid;grid-template-columns:1fr;gap:0}
-@media (min-width:980px){.split{grid-template-columns:1fr 1fr}}
-.side{padding:clamp(24px,3vw,40px);border:1px solid var(--rule-2)}
-.side + .side{border-top:0}
-@media (min-width:980px){.side + .side{border-top:1px solid var(--rule-2);border-left:0}}
-.side--up{background:var(--paper)}
-.side--down{background:var(--bone);background-image:var(--hatch);background-blend-mode:normal}
-.side--down .inner2{background:var(--bone);padding:0}
-.side h4{margin-bottom:18px}
-.figs{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule-2)}
-@media (min-width:760px){.figs{grid-template-columns:repeat(3,1fr)}}
-.figs > div{padding:22px 0;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:10px}
+/* ── stat trio ────────────────────────────────────────────────── */
+.trio{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line)}
+@media (min-width:760px){.trio{grid-template-columns:repeat(3,1fr)}}
+.trio > div{padding:min(2.6vh,26px) 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
 @media (min-width:760px){
-  .figs > div{padding:24px clamp(18px,2.4vw,34px);border-bottom:0;border-left:1px solid var(--rule)}
-  .figs > div:first-child{padding-left:0;border-left:0}
+  .trio > div{padding:min(2.6vh,26px) clamp(16px,2.4vw,36px);border-bottom:0;border-left:1px solid var(--line)}
+  .trio > div:first-child{padding-left:0;border-left:0}
 }
+.trio .n{font-family:var(--disp);font-variation-settings:"wdth" 66,"wght" 800;font-size:min(7vw,9vh);
+  line-height:.86;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 
-/* ── timeline ─────────────────────────────────────────────────── */
-.watch{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule-inv)}
-@media (min-width:820px){.watch{grid-template-columns:repeat(5,1fr)}}
-.watch > div{padding:20px 0;border-bottom:1px solid var(--rule-inv);display:flex;flex-direction:column;gap:8px}
-@media (min-width:820px){
-  .watch > div{padding:22px clamp(14px,1.6vw,24px) 10px;border-bottom:0;border-left:1px solid var(--rule-inv)}
-  .watch > div:first-child{padding-left:0;border-left:0}
-}
-.watch .tick{width:100%;height:4px;background:var(--white);transform:scaleX(0);transform-origin:left;
-  transition:transform .6s var(--ei) calc(var(--d,0) * 90ms)}
-.vis .watch .tick{transform:scaleX(1)}
-
-/* ── question ─────────────────────────────────────────────────── */
-.qbig{font-family:var(--disp);font-variation-settings:"wdth" 78,"wght" 700;text-transform:none;
-  font-size:clamp(1.6rem,4.2vw,3.2rem);line-height:1.02;letter-spacing:-.028em;max-width:34ch}
-.qbig em{font-style:normal;background:var(--clay);color:var(--white);padding:0 .1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.stances{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--rule-inv)}
-@media (min-width:900px){.stances{grid-template-columns:repeat(3,1fr)}}
-.stances > div{padding:24px 0;border-bottom:1px solid var(--rule-inv);display:flex;flex-direction:column;gap:14px}
-@media (min-width:900px){
-  .stances > div{padding:26px clamp(16px,2vw,30px) 8px;border-bottom:0;border-left:1px solid var(--rule-inv)}
-  .stances > div:first-child{padding-left:0;border-left:0}
-}
-.arg{display:flex;flex-direction:column;gap:4px}
-.arg .t{font-family:var(--mono);font-size:.64rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
-.arg p{font-size:.92rem;line-height:1.5}
-
-/* ── references ───────────────────────────────────────────────── */
-.refs{display:grid;grid-template-columns:1fr;gap:0 clamp(24px,3vw,56px);border-top:1px solid var(--rule-2)}
-@media (min-width:860px){.refs{grid-template-columns:1fr 1fr}}
-.refs > li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--rule);align-items:start}
-.refs .n{font-family:var(--mono);font-size:.68rem;color:var(--clay);padding-top:2px}
-.refs .d{font-size:.84rem;line-height:1.4;color:var(--ink-70);display:block;margin-top:2px}
-.refs .ttl2{font-size:.94rem;line-height:1.35}
-footer.end{padding:clamp(28px,4vh,44px) var(--gut);background:var(--ink);color:var(--white)}
-footer.end .in2{max-width:1340px;margin-inline:auto;display:flex;flex-wrap:wrap;gap:14px 40px;justify-content:space-between;align-items:baseline}
-footer.end .cite{color:rgba(251,252,250,.6)}
+/* ── sources ──────────────────────────────────────────────────── */
+.refs{display:grid;grid-template-columns:1fr;gap:0 clamp(20px,3vw,52px);overflow:auto;min-height:0}
+@media (min-width:820px){.refs{grid-template-columns:1fr 1fr}}
+.refs li{display:grid;grid-template-columns:36px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.refs .n{font-family:var(--mono);font-size:.64rem;color:var(--clay);padding-top:3px}
+.refs .t{font-size:clamp(.8rem,.95vw,.94rem);line-height:1.3}
+.refs .d{display:block;font-size:.74rem;color:var(--dim);margin-top:1px}
 
 @media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  html.anim .rise > span,html.anim .ttl .band{transform:none!important;transition:none!important}
-  html.anim [data-fade]{opacity:1!important;transition:none!important}
-  .tally i,.wire .fl,.blk,.gate,.result,.bar .tr i,.watch .tick,.stamp,.escal .inner{transition-duration:.01ms!important;transition-delay:0ms!important}
-  .vis .bar .tr i{transform:scaleX(var(--w,1))}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;transition-delay:0ms!important}
+  .word{transform:none;opacity:1}
+  #rain i{transform:none}
 }
 </style>
 </head>
 <body>
 
-<div id="prog"><i></i></div>
-<div id="rh">
-  <span class="t">AI in Therapy</span>
-  <span class="s" id="rhs">Title</span>
-</div>
+<div id="bar"><i></i></div>
 
-<main>
+<div id="deck">
 
-<!-- ══════════════ TITLE ══════════════ -->
-<section class="field" id="hero" data-sec="Title" data-nav="Title">
-  <div class="in vis">
-    <div class="stack">
-      <p class="lab" data-fade style="--d:0">Leading in the Age of AI &nbsp;·&nbsp; NYU Stern &nbsp;·&nbsp; Group presentation</p>
-      <h1 class="ttl">
-        <span class="rise giant" style="--d:1"><span>AI in</span></span>
-        <span class="band giant"><span>Therapy</span></span>
-      </h1>
-      <div class="gr" style="margin-top:clamp(10px,2vh,22px)">
-        <div class="c7 stack stack--s">
-          <p class="lead" data-fade style="--d:4;max-width:46ch">Nearly half of U.S. adults with a mental illness received no treatment last year. Software is now aimed at that gap. This is what is actually deployed, what the evidence supports, and where it breaks.</p>
-          <p class="keys lab dim" data-fade style="--d:5"><span><kbd>↓</kbd> or <kbd>space</kbd> to advance</span><span>Every figure is sourced in §10</span></p>
-        </div>
-      </div>
-      <div class="strip" data-fade style="--d:6;margin-top:clamp(14px,3vh,36px)">
-        <div>
-          <span class="n">59.3M</span>
-          <span class="k">U.S. adults had any mental illness in 2022<sup>1</sup></span>
-        </div>
-        <div>
-          <span class="n" style="color:var(--sea)">$19.99</span>
-          <span class="k">A month for unlimited conversations with Talkspace’s AI guide<sup>19</sup></span>
-        </div>
-        <div>
-          <span class="n" style="color:var(--clay)">0</span>
-          <span class="k">Generative-AI mental-health devices authorized by the FDA, as of Nov 2025</span>
-        </div>
-      </div>
-      <p class="cite" data-fade style="--d:7">Taylor &nbsp;·&nbsp; Yuval &nbsp;·&nbsp; Yonatan &nbsp;·&nbsp; Prasun &nbsp;·&nbsp; Noah</p>
+<!-- ░░ 00 ░░ -->
+<section class="sl" data-nm="Title">
+  <div class="grow" style="gap:min(4vh,36px)">
+    <p class="lab dimc" data-s style="--i:0">Leading in the Age of AI &nbsp;·&nbsp; NYU Stern</p>
+    <h1 class="ttl">
+      <span class="wordwrap"><span class="word" style="--i:0">AI in</span></span>
+      <span class="wordwrap"><span class="word band" style="--i:1">Therapy</span></span>
+    </h1>
+    <div data-s style="--i:2;display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center">
+      <button class="enter" id="go" type="button">Begin &nbsp;→</button>
+      <span class="lab dimc">Taylor · Yuval · Yonatan · Prasun · Noah</span>
     </div>
   </div>
-</section>
-
-<!-- ══════════════ 01 THE GAP ══════════════ -->
-<section class="field" id="gap" data-sec="01 · The gap" data-nav="The gap">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§01</span><span class="l"></span><span class="n">The access gap</span></div>
-      <h2 class="h2 rise"><span>Half of them<br>got nothing</span></h2>
-    </div>
-    <div class="gr">
-      <div class="c8 stack">
-        <div class="tallywrap">
-          <div class="tally" id="tally" aria-hidden="true"></div>
-          <div class="hatchover"></div>
-        </div>
-        <div class="tagline">
-          <span class="lab">100 units &nbsp;=&nbsp; 59.3M adults</span>
-          <span class="lab lab--clay">49.4% no treatment</span>
-        </div>
-        <p class="say" data-fade>Of the 59.3 million U.S. adults with any mental illness in 2022, 50.6% received treatment in the prior year. Treatment here counts medication or counseling.<sup>1</sup></p>
-      </div>
-      <div class="c4 stack">
-        <div class="stack stack--s">
-          <p class="lab lab--clay">Read it carefully</p>
-          <p class="say" style="font-size:.95rem">“No treatment” is not the same as unmet demand for AI. Some of that 49.4% were not looking for care. The gap is a reason to study access, not a market size.</p>
-        </div>
-      </div>
-    </div>
-    <div class="tblwrap" style="margin-top:clamp(30px,5vh,56px)">
-      <table class="tbl">
-        <thead><tr><th style="width:22%">Barrier</th><th style="width:48%">Why it matters</th><th style="width:30%">Where AI is pointed</th></tr></thead>
-        <tbody>
-          <tr><td class="nm">Cost and coverage</td><td>Affordable care is hard to find, and coverage rules decide who gets seen.</td><td class="ex">Help finding care options</td></tr>
-          <tr><td class="nm">Provider capacity</td><td>Appointments and clinician hours are a fixed supply. Every extra session needs a person.</td><td class="ex">Intake and workflow support</td></tr>
-          <tr><td class="nm">Stigma and uncertainty</td><td>Finding a provider and booking the first appointment can feel like too much to start.</td><td class="ex">A low-pressure first conversation</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="say" data-fade style="margin-top:26px;max-width:56ch">The opportunity is narrow: make the first step easier, and keep a clear path to a human after it.<sup>1,6,7,12</sup></p>
-  </div>
-</section>
-
-<!-- ══════════════ 02 THE LANDSCAPE ══════════════ -->
-<section class="field bonef" id="today" data-sec="02 · Deployed today" data-nav="Landscape">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§02</span><span class="l"></span><span class="n">Deployed today</span></div>
-      <h2 class="h2 rise"><span>Five jobs, five<br>levels of liability</span></h2>
-      <p class="lead" data-fade style="--d:2">Drafting a clinician’s notes and giving treatment advice are not the same product, even when both get called “AI therapy.”</p>
-    </div>
-    <div class="tblwrap">
-      <table class="tbl">
-        <thead><tr><th style="width:17%">Role</th><th style="width:17%">In the market</th><th style="width:34%">What it does</th><th style="width:32%">Where it stops</th></tr></thead>
-        <tbody>
-          <tr><td class="nm">Self-help<br>and skills</td><td class="ex">Wysa, Youper<sup>4,5</sup></td><td>Guided conversations and coping exercises, on demand.</td><td class="lim">A helpful interaction does not prove clinical benefit.</td></tr>
-          <tr><td class="nm">Care<br>navigation</td><td class="ex">Limbic, Lyra’s AI guide<sup>6,15</sup></td><td>Intake, guidance and referral in front of a care system.</td><td class="lim">Navigation still depends on care being available.</td></tr>
-          <tr><td class="nm">Clinician<br>support</td><td class="ex">Eleos<sup>7</sup></td><td>Drafts notes and session feedback for a clinician to review.</td><td class="lim">Clinicians remain responsible for every care decision.</td></tr>
-          <tr><td class="nm">Treatment<br>research</td><td class="ex">Therabot trial<sup>3</sup></td><td>AI-led therapeutic dialogue inside a clinical study.</td><td class="lim">Results apply to the tested system and population, not to an app store.</td></tr>
-          <tr><td class="nm">Human-led<br>digital care</td><td class="ex">Ieso, now Mindler<sup>17</sup></td><td>A human therapist delivers CBT online, by text or video.</td><td class="lim">Online therapy is not automatically AI-delivered care.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="say" data-fade style="margin-top:26px">Product features and user engagement do not establish clinical effectiveness. A pleasant conversation is evidence of a pleasant conversation.</p>
-  </div>
-</section>
-
-<!-- ══════════════ 03 TEE ══════════════ -->
-<section class="field" id="tee" data-sec="03 · Case: Tee" data-nav="Tee">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§03</span><span class="l"></span><span class="n">Case example</span></div>
-      <h2 class="h2 rise"><span>Tee priced the<br>first conversation</span></h2>
-      <p class="lead" data-fade style="--d:2">Talkspace’s AI mental-health guide. Speak or type, any hour, unlimited, $19.99 a month after a seven-day trial. It remembers the last conversation. Talkspace is deliberate that Tee is a guide, not a licensed therapist.<sup>18,19</sup></p>
-    </div>
-
-    <div class="gr" style="margin-bottom:clamp(30px,5vh,56px)">
-      <div class="c6 stack stack--s">
-        <p class="lab lab--clay">Why it is not a general chatbot</p>
-        <h3 class="h3">A conversation with a shape</h3>
-        <ol class="num-list" style="margin-top:6px">
-          <li><b>Understand</b>what the person wants to talk about</li>
-          <li><b>Set a focus</b>for the conversation</li>
-          <li><b>Explore</b>the thoughts or emotions underneath it</li>
-          <li><b>Apply a technique</b>including CBT-based exercises</li>
-          <li><b>Reflect</b>on what came out of it</li>
-        </ol>
-      </div>
-      <div class="c6 stack stack--s">
-        <p class="lab lab--clay">What it changes</p>
-        <h3 class="h3">A rung that was not there</h3>
-        <p class="say" style="font-size:.97rem">Before Tee, the step after “I am struggling” was a licensed professional, or nothing. Traditional therapy is bounded by clinician time: every extra appointment needs capacity, scheduling and cost. Tee separates one layer of support from those constraints.</p>
-        <ul class="pts pts--clay" style="margin-top:4px">
-          <li><b>No support</b></li>
-          <li><b>AI-guided support</b> &nbsp;$19.99 / month, unlimited</li>
-          <li><b>Licensed therapy and psychiatry</b> &nbsp;diagnosis, treatment, crisis</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="stack stack--s">
-      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
-        <h3 class="h3">The path to a first conversation</h3>
-        <button class="btn" id="runpaths" type="button"><span id="pathslab">Run both paths</span></button>
-      </div>
-      <div class="paths" id="paths">
-        <div class="path trad">
-          <h4><span class="h3">Traditional route</span><span class="lab dim">Clinician time</span></h4>
-          <div class="gate"><span class="mk">01</span><span class="g"><b>You notice you need help</b></span></div>
-          <div class="gate"><span class="mk">02</span><span class="g">Find a provider who is taking new patients</span></div>
-          <div class="gate"><span class="mk">03</span><span class="g">Wait for an opening in a fixed supply of hours</span></div>
-          <div class="gate"><span class="mk">04</span><span class="g">Pay for clinician time, or argue the coverage question</span></div>
-          <div class="gate"><span class="mk">05</span><span class="g"><b>First conversation</b></span></div>
-          <div class="result slow"><span class="big">Gated by capacity</span><br><span class="lab dim">Four gates before anyone talks</span></div>
-        </div>
-        <div class="path tee">
-          <h4><span class="h3">With Tee</span><span class="lab dim">Subscription</span></h4>
-          <div class="gate"><span class="mk">01</span><span class="g"><b>You notice you need help</b></span></div>
-          <div class="gate"><span class="mk">02</span><span class="g">Open the app</span></div>
-          <div class="gate"><span class="mk">03</span><span class="g"><b>First conversation</b>, any hour, unlimited</span></div>
-          <div class="result fast"><span class="big">No queue, flat price</span><br><span class="lab dim">One step, same price every time</span></div>
-        </div>
-      </div>
-      <p class="say" data-fade style="margin-top:20px"><b>What this commoditizes, and what it does not.</b> Tee prices one layer of mental-health support like software instead of like clinician hours. It does not commoditize therapy: diagnosis, formal treatment, crisis management and complex clinical judgment stay with licensed professionals, and Talkspace’s own human therapy plans cost substantially more than the AI subscription.<sup>19</sup></p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ 04 HOW IT WORKS ══════════════ -->
-<section class="field bonef" id="how" data-sec="04 · How Tee works" data-nav="How it works">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§04</span><span class="l"></span><span class="n">Under the conversation</span></div>
-      <h2 class="h2 rise"><span>Send a message<br>through the system</span></h2>
-      <p class="lead" data-fade style="--d:2">Tee is not a general model with a mental-health interface in front of it. Pick a message. The second one carries risk signals.</p>
-    </div>
-
-    <div class="diag">
-      <div class="top">
-        <span class="lab dim">Input</span>
-        <button class="pick" id="m-plain" type="button" aria-pressed="true">“Work has been rough and I keep snapping at my partner.”</button>
-        <button class="pick alarm" id="m-risk" type="button" aria-pressed="false">“I don’t see the point in any of this anymore.”</button>
-        <button class="btn btn--out" id="runsim" type="button" style="margin-left:auto"><span id="simlab">Send</span></button>
-      </div>
-
-      <div class="flow">
-        <div class="blk" id="b1">
-          <span class="bl">01 · Input</span>
-          <span class="bt">The person</span>
-          <span class="bd" id="b1d">Voice or text, any hour</span>
-        </div>
-        <div class="wire" id="w1"><span class="ln"></span><span class="fl"></span><span class="hd"></span></div>
-        <div class="blk" id="b2">
-          <span class="bl">02 · Model</span>
-          <span class="bt">Sentia</span>
-          <span class="bd">Talkspace’s behavioral-health model, trained on clinical data from millions of patient journeys<sup>20</sup></span>
-        </div>
-        <div class="wire" id="w2"><span class="ln"></span><span class="fl"></span><span class="hd"></span></div>
-        <div class="blk" id="b3">
-          <span class="bl">03 · Orchestration</span>
-          <span class="bt">Multi-agent orchestrator</span>
-          <ul class="agents">
-            <li id="a1">Agenda and focus</li>
-            <li id="a2">Exploration</li>
-            <li id="a3">CBT-based exercise</li>
-            <li id="a4">Memory and continuity</li>
-            <li id="a5">Risk detection</li>
-          </ul>
-        </div>
-        <div class="wire" id="w3"><span class="ln"></span><span class="fl"></span><span class="hd"></span></div>
-        <div class="blk" id="b4">
-          <span class="bl">04 · Output</span>
-          <span class="bt">Reply in Tee</span>
-          <span class="bd readout" id="readout">Press send.</span>
-        </div>
-      </div>
-
-      <div class="escal" id="escal">
-        <div class="inner">
-          <div class="stamp">Flagged for<br>clinician review</div>
-          <div class="stack stack--s">
-            <span class="lab" id="escl">Escalation path · idle</span>
-            <p class="say" style="font-size:.95rem;max-width:62ch">A flagged conversation goes to a licensed supervising clinician, who can start an escalation pathway. Clinicians sit in the monitoring and escalation system, inside what the filing calls a human-in-the-loop quality management system. Talkspace states there is no real-time human monitoring of every conversation.<sup>18,21</sup></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="blocks" style="margin-top:clamp(30px,5vh,56px)">
-      <div class="block">
-        <div class="q"><span class="n">A</span><h4 class="h3">Domain-specific, not general</h4></div>
-        <p class="say" style="font-size:.95rem">Sentia is proprietary and behavioral-health focused. Talkspace also runs systems that check whether a response aligns with what a skilled licensed therapist would say, while still distinguishing Tee from therapy.<sup>20,22</sup></p>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">B</span><h4 class="h3">It carries the thread</h4></div>
-        <p class="say" style="font-size:.95rem">Tee remembers previous conversations and adapts to them, so the fifth conversation is not a cold start like the first.<sup>18</sup></p>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">C</span><h4 class="h3">Components, not one call</h4></div>
-        <p class="say" style="font-size:.95rem">Several AI components handle different functions and an orchestration layer decides how they work together. One model response is not doing all of this.<sup>20</sup></p>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">D</span><h4 class="h3">Detection plus a human</h4></div>
-        <p class="say" style="font-size:.95rem">Automated monitoring flags indicators of elevated clinical risk for a supervising clinician rather than deciding the clinical response itself.<sup>21</sup></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ 05 IMPLEMENTATION ══════════════ -->
-<section class="field" id="build" data-sec="05 · Implementation" data-nav="Deploying it">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§05</span><span class="l"></span><span class="n">What it takes to do it right</span></div>
-      <h2 class="h2 rise"><span>One job, and<br>a human behind it</span></h2>
-    </div>
-
-    <div class="gr" style="margin-bottom:clamp(26px,4vh,48px)">
-      <div class="c6 stack stack--s">
-        <p class="lab">Therapy sign-ups at NHS clinics, 2024<sup>6</sup></p>
-        <div class="bars">
-          <div class="bar"><div class="bl"><span>Clinics using the AI chatbot</span><span class="v" style="color:var(--sea)">+15%</span></div><div class="tr"><i style="--w:1"></i></div></div>
-          <div class="bar b2"><div class="bl"><span>Clinics without it</span><span class="v dim">+6%</span></div><div class="tr"><i style="--w:.4"></i></div></div>
-        </div>
-      </div>
-      <div class="c3 stack stack--s">
-        <span class="fig">1st</span>
-        <p class="say" style="font-size:.93rem">That same chatbot, Limbic, became the UK’s first approved mental-health AI device, in 2023.</p>
-      </div>
-      <div class="c3 stack stack--s">
-        <span class="fig fig--clay">7</span>
-        <p class="say" style="font-size:.93rem">Areas experts say to check before deploying one, privacy, safety and bias among them. Joint Commission and CHAI, 2025.</p>
-      </div>
-    </div>
-
-    <div class="blocks">
-      <div class="block">
-        <div class="q"><span class="n">Before launch</span></div>
-        <h4 class="h3">Plan it carefully</h4>
-        <ol class="num-list">
-          <li><b>Give it one job.</b>Sign-ups, practice between sessions, or note-taking. Not acting as the therapist.</li>
-          <li><b>Keep a human close.</b>If someone is at risk, a real clinician steps in right away.</li>
-          <li><b>People decide.</b>AI can help; the clinician makes the care decisions.</li>
-          <li><b>Start small.</b>One clinic first, then expand what actually worked.</li>
-          <li><b>Check real results.</b>Are people feeling better, and getting care sooner?</li>
-        </ol>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">After launch</span></div>
-        <h4 class="h3">Support it properly</h4>
-        <ol class="num-list">
-          <li><b>Test it on real patients.</b>Across ages, languages and backgrounds.</li>
-          <li><b>Keep watching it.</b>Check it regularly after launch and report problems.</li>
-          <li><b>Protect private data.</b>Store it safely and limit what the vendor can do with it.</li>
-          <li><b>Train the staff.</b>Teach clinicians how to use it, and when not to trust it.</li>
-          <li><b>Include everyone.</b>Other languages, and options for people without smartphones.</li>
-        </ol>
-      </div>
-    </div>
-    <p class="cite" style="margin-top:22px">Nature Medicine · MIT Technology Review · Limbic · Joint Commission and CHAI · APA</p>
-  </div>
-</section>
-
-<!-- ══════════════ 06 ETHICS ══════════════ -->
-<section class="field inkf" id="ethics" data-sec="06 · Ethics and law" data-nav="Ethics and law" data-dark>
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§06</span><span class="l"></span><span class="n">Ethical and legal concerns</span></div>
-      <h2 class="h2 rise"><span>Four questions<br>it has to answer</span></h2>
-      <p class="lead" data-fade style="--d:2">The checklist before trusting any of these tools with someone’s mental health.</p>
-    </div>
-    <div class="blocks">
-      <div class="block">
-        <div class="q"><span class="n">01</span><h4 class="h3">Do people know they are talking to AI?</h4></div>
-        <ul class="pts">
-          <li><b>Be upfront.</b> Always tell people when they are chatting with a bot.</li>
-          <li><b>Ask first.</b> Get permission before recording a session for AI notes.</li>
-          <li><b>Name the limits.</b> Say what it cannot do, and where to find crisis help.</li>
-        </ul>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">02</span><h4 class="h3">Is their private information safe?</h4></div>
-        <ul class="pts">
-          <li><b>A legal gap.</b> HIPAA, the main U.S. health privacy law, mostly does not cover apps.</li>
-          <li><b>Some protection.</b> Since 2024 the FTC requires health apps to report data leaks.</li>
-          <li><b>The open question.</b> Can your conversations train the model, or target ads at you?</li>
-        </ul>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">03</span><h4 class="h3">Could it cause harm?</h4></div>
-        <ul class="pts">
-          <li><b>Bias.</b> Models trained mostly on English, Western data can misread other cultures.</li>
-          <li><b>Too agreeable.</b> A bot that always agrees can reinforce a harmful thought.</li>
-          <li><b>Children.</b> In 2025 the FTC asked seven AI companies, OpenAI and Meta included, how they protect kids.</li>
-        </ul>
-      </div>
-      <div class="block">
-        <div class="q"><span class="n">04</span><h4 class="h3">Who is responsible when it goes wrong?</h4></div>
-        <ul class="pts">
-          <li><b>Few rules.</b> The FDA only steps in when an app claims to treat an illness.</li>
-          <li><b>Unclear blame.</b> The company, the therapist, or the clinic?</li>
-          <li><b>Guidelines fill the gap.</b> Groups like the APA set their own standards instead.<sup>12</sup></li>
-        </ul>
-      </div>
-    </div>
-    <p class="cite" style="margin-top:22px">APA · Joint Commission and CHAI · FTC · FDA · King &amp; Spalding · Morrison Foerster</p>
-  </div>
-</section>
-
-<!-- ══════════════ 07 EVIDENCE ══════════════ -->
-<section class="field" id="evidence" data-sec="07 · Benefits and limits" data-nav="Evidence">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§07</span><span class="l"></span><span class="n">Benefits and limitations</span></div>
-      <h2 class="h2 rise"><span>Access is the upside.<br>Evidence is the catch.</span></h2>
-    </div>
-
-    <div class="figs" style="margin-bottom:clamp(26px,4vh,48px)">
-      <div><span class="fig" data-count="137" data-suffix="M">137M</span><p class="say" style="font-size:.93rem">Americans live in a mental-health shortage area. HRSA, 2025.</p></div>
-      <div><span class="fig" style="color:var(--sea)" data-count="51" data-suffix="%">51%</span><p class="say" style="font-size:.93rem">Self-reported drop in depression symptoms in the first generative-AI RCT, n=210.<sup>3</sup></p></div>
-      <div><span class="fig fig--clay" data-count="0" data-suffix="">0</span><p class="say" style="font-size:.93rem">FDA-authorized generative-AI mental-health devices. FDA, Nov 2025.</p></div>
-    </div>
-
-    <div class="split">
-      <div class="side side--up">
-        <h4 class="h3">What holds up</h4>
-        <ul class="pts">
-          <li><b>Access.</b> Roughly 1,600 depressed or anxious patients per U.S. provider. A bot is available at 2am, costs little, and has no waitlist.</li>
-          <li><b>The Therabot RCT.</b> n=210, large effects against a waitlist control, d≈0.9 depression and 0.8 anxiety, all self-reported.<sup>3</sup></li>
-          <li><b>Meta-analysis.</b> 14 RCTs, n=6,314, a moderate pooled effect on depression, g≈0.5, with wide error bars.</li>
-          <li><b>Engagement.</b> People start sessions themselves, often at night, and rate the bond on par with human therapists.</li>
-          <li><b>Clinician support.</b> AI note-taking cut burnout by 21 points across 1,430 clinicians in general medicine. Administrative, not clinical.</li>
-        </ul>
-      </div>
-      <div class="side side--down">
-        <div class="inner2">
-          <h4 class="h3" style="color:var(--clay-deep)">What does not</h4>
-          <ul class="pts pts--clay">
-            <li><b>Crisis failures.</b> Bots have listed tall bridges to a user who had just lost a job. Newer models did no better.</li>
-            <li><b>Ethics gaps.</b> 15 ethical risks catalogued at Brown. RAND found bots cannot grade mid-level suicide risk.</li>
-            <li><b>Lawsuits.</b> Character.AI and Google settling five teen suits as of January 2026. OpenAI faces Raine and seven more.</li>
-            <li><b>Thin evidence.</b> Self-reported outcomes, waitlist controls, about 16% with follow-up. The anxiety benefit is unproven.</li>
-            <li><b>Oversight.</b> No FDA generative-AI device in this category. Illinois bans AI therapy. BetterHelp paid a $7.8M privacy fine.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <p class="cite" style="margin-top:22px">HRSA · NEJM AI · JMIR · Stanford · Brown · RAND · JAMA · FDA · Bloomberg Law · FTC</p>
-  </div>
-</section>
-
-<!-- ══════════════ 08 OUTLOOK ══════════════ -->
-<section class="field sea" id="outlook" data-sec="08 · Where it is going" data-nav="Outlook" data-dark>
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§08</span><span class="l"></span><span class="n">Where the industry is going</span></div>
-      <h2 class="h2 rise"><span>Money is in.<br>The lanes are drawn.</span></h2>
-    </div>
-    <div class="blocks" style="border-top-color:var(--rule-inv)">
-      <div class="block" style="border-bottom-color:var(--rule-inv)">
-        <div class="q"><span class="n" style="color:var(--white)">01</span><h4 class="h3">Capital is flowing, market sizing is noise</h4></div>
-        <ul class="pts">
-          <li><b>$14.2B</b> across 482 U.S. digital-health deals in 2025, up 35%. AI took 54% of the dollars.</li>
-          <li><b>Market size.</b> About $1.7B to $1.8B in 2025, projected to $9B to $12B by 2033 or 2034. One vendor report claims $64B already in 2026.</li>
-          <li><b>Purpose-built models.</b> Slingshot AI raised $93M for its therapy model Ash after a 50,000-user beta.</li>
-        </ul>
-      </div>
-      <div class="block" style="border-bottom-color:var(--rule-inv);border-left-color:var(--rule-inv)">
-        <div class="q"><span class="n" style="color:var(--white)">02</span><h4 class="h3">Lanes for tools, a wall for “AI therapists”</h4></div>
-        <ul class="pts">
-          <li><b>FDA.</b> Zero generative-AI mental-health devices authorized. The TEMPO pilot admitted its first AI therapy firm in 2026.</li>
-          <li><b>States.</b> Illinois bans AI therapy at $10k per violation, Nevada bans it, Utah requires disclosure, California passed a crisis law.</li>
-          <li><b>Abroad.</b> EU high-risk duties slip to 2027 and 2028. The APA, WHO and UK regulators all say support, do not replace.</li>
-        </ul>
-      </div>
-      <div class="block" style="border-bottom-color:var(--rule-inv)">
-        <div class="q"><span class="n" style="color:var(--white)">03</span><h4 class="h3">Frontier labs are crisis responders by default</h4></div>
-        <ul class="pts">
-          <li><b>OpenAI.</b> Says 0.15% of weekly users show signs of suicidal planning. 170 or more clinicians involved, and 65% to 80% fewer bad replies claimed.</li>
-          <li><b>Anthropic and Google.</b> A real-time self-harm classifier, and Gemini linked to crisis lines with $30M pledged.</li>
-          <li><b>Character.AI.</b> Barred under-18s in November 2025. 19% of U.S. youth ask chatbots for mental-health advice.</li>
-        </ul>
-      </div>
-      <div class="block" style="border-bottom-color:var(--rule-inv);border-left-color:var(--rule-inv)">
-        <div class="q"><span class="n" style="color:var(--white)">04</span><h4 class="h3">“Augment” is winning, “replace” is lab-bound</h4></div>
-        <ul class="pts">
-          <li><b>Augment.</b> Lyra, Spring Health and Talkspace route at-risk users to human clinicians, on company-reported numbers.</li>
-          <li><b>Adoption.</b> Psychologists who never use AI fell from 71% to 44%. Medicare still has no AI reimbursement policy.</li>
-          <li><b>Replace.</b> Therabot is research-only, Limbic’s data is company-reported, and Woebot shut down in 2025.</li>
-        </ul>
-      </div>
-    </div>
-
-    <p class="lab" style="margin-top:clamp(28px,4vh,48px)">What to watch in 2027</p>
-    <div class="watch" style="margin-top:14px">
-      <div style="--d:0"><span class="tick"></span><span class="lab">FDA</span><span class="say" style="font-size:.92rem">A first generative-AI authorization, or TEMPO readouts</span></div>
-      <div style="--d:1"><span class="tick"></span><span class="lab">July</span><span class="say" style="font-size:.92rem">California chatbot-law reporting begins</span></div>
-      <div style="--d:2"><span class="tick"></span><span class="lab">December</span><span class="say" style="font-size:.92rem">EU high-risk AI rules apply</span></div>
-      <div style="--d:3"><span class="tick"></span><span class="lab">Courts</span><span class="say" style="font-size:.92rem">Consolidated ChatGPT litigation</span></div>
-      <div style="--d:4"><span class="tick"></span><span class="lab">Payers</span><span class="say" style="font-size:.92rem">Whether Medicare takes a position on AI reimbursement</span></div>
-    </div>
-    <p class="cite" style="margin-top:22px">Rock Health · FDA · Holland &amp; Knight · OpenAI · JAMA Pediatrics · APA · Sidley · STAT</p>
-  </div>
-</section>
-
-<!-- ══════════════ 09 CLOSE ══════════════ -->
-<section class="field" id="close" data-sec="09 · Conclusion" data-nav="Where we land">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§09</span><span class="l"></span><span class="n">Conclusion and discussion</span></div>
-      <h2 class="h2 rise"><span>Where we land</span></h2>
-    </div>
-    <div class="gr" style="margin-bottom:clamp(30px,5vh,60px)">
-      <div class="c4"><p class="say">The same split shows up in every section. These systems are good at conversation, paperwork and routing. They are weak at judging risk. The products that work in 2026 pick one of those jobs and keep a clinician attached to it.</p></div>
-      <div class="c4"><p class="say">That is what makes Tee worth looking at. Talkspace priced the supportive-conversation layer at $19.99 a month and left diagnosis, treatment and crisis care with licensed people. The lawsuits in the news are not about products built that way. They are about general chatbots that millions of people used for mental-health support with no clinical design behind them.</p></div>
-      <div class="c4"><p class="say">And none of it is approved as treatment. Zero generative-AI mental-health devices have FDA authorization. The evidence is one promising trial, a meta-analysis with wide error bars, and a large pile of company-reported numbers.</p></div>
-    </div>
-    <hr class="hr">
-    <div class="stack" style="margin-top:clamp(26px,4vh,48px)">
-      <p class="lab lab--clay">Discussion</p>
-      <p class="qbig rise"><span>Tee has no waitlist and costs $19.99 a month. If that is good enough for the first conversation, <em>who decides when someone moves up to a licensed clinician?</em></span></p>
-      <div class="stances" style="border-top-color:var(--rule-2);margin-top:14px">
-        <div style="border-bottom-color:var(--rule);border-left-color:var(--rule)">
-          <h4 class="h3">The user decides</h4>
-          <div class="arg"><span class="t" style="color:var(--sea)">The case</span><p>People already self-triage. A tool with no queue lowers the cost of asking for help early, which is exactly where the access gap sits.</p></div>
-          <div class="arg"><span class="t" style="color:var(--clay)">The problem</span><p>The person in the worst shape is the least likely to escalate, and the business earns more the longer someone stays in the cheap layer.</p></div>
-        </div>
-        <div style="border-bottom-color:var(--rule);border-left-color:var(--rule)">
-          <h4 class="h3">The risk model decides</h4>
-          <div class="arg"><span class="t" style="color:var(--sea)">The case</span><p>It reads every conversation, never gets tired, and the escalation path to a supervising clinician is already built and running.</p></div>
-          <div class="arg"><span class="t" style="color:var(--clay)">The problem</span><p>RAND found these models cannot grade mid-level suicide risk, and the company selling the subscription is the one setting the threshold.</p></div>
-        </div>
-        <div style="border-bottom-color:var(--rule);border-left-color:var(--rule)">
-          <h4 class="h3">The payer decides</h4>
-          <div class="arg"><span class="t" style="color:var(--sea)">The case</span><p>Insurers and employers hold the money. They can require a human after a set number of sessions, and they already gate the rest of care.</p></div>
-          <div class="arg"><span class="t" style="color:var(--clay)">The problem</span><p>Medicare has no AI reimbursement policy at all. The cheap layer stays out of pocket, and the incentive runs toward whatever costs least.</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ 10 SOURCES ══════════════ -->
-<section class="field bonef" id="sources" data-sec="10 · Sources" data-nav="Sources">
-  <div class="in">
-    <div class="open">
-      <div class="idx"><span class="n">§10</span><span class="l"></span><span class="n">References</span></div>
-      <h2 class="h2 rise"><span>Where each<br>number comes from</span></h2>
-    </div>
-    <ul class="refs">
-      <li><span class="n">01</span><span><a href="https://www.nimh.nih.gov/health/statistics/mental-illness" target="_blank" rel="noopener" class="ttl2">NIMH, Mental Illness statistics</a><span class="d">2022 NSDUH estimates, updated September 2024.</span></span></li>
-      <li><span class="n">03</span><span><a href="https://ai.nejm.org/doi/full/10.1056/AIoa2400802" target="_blank" rel="noopener" class="ttl2">Heinz et al., 2025. Generative AI chatbot randomized trial</a><span class="d">NEJM AI. Therabot, n=210.</span></span></li>
-      <li><span class="n">04</span><span><a href="https://www.jmir.org/2021/6/e26771" target="_blank" rel="noopener" class="ttl2">Mehta et al., 2021. Youper longitudinal observational study</a><span class="d">Journal of Medical Internet Research 23(6), e26771.</span></span></li>
-      <li><span class="n">05</span><span><a href="https://mhealth.jmir.org/2018/11/e12106/" target="_blank" rel="noopener" class="ttl2">Inkster, Sarda and Subramanian, 2018. Wysa evaluation</a><span class="d">JMIR mHealth and uHealth 6(11), e12106. Observational.</span></span></li>
-      <li><span class="n">06</span><span><a href="https://pubmed.ncbi.nlm.nih.gov/38317020/" target="_blank" rel="noopener" class="ttl2">Habicht et al., 2024. Self-referral chatbot and access</a><span class="d">Nature Medicine 30, 595 to 602.</span></span></li>
-      <li><span class="n">07</span><span><a href="https://pubmed.ncbi.nlm.nih.gov/37428547/" target="_blank" rel="noopener" class="ttl2">Sadeh-Sharvit et al., 2023. Eleos randomized clinical trial</a><span class="d">JMIR 25, e46781. 47 participants.</span></span></li>
-      <li><span class="n">12</span><span><a href="https://www.apa.org/topics/artificial-intelligence-machine-learning/health-advisory-chatbots-wellness-apps" target="_blank" rel="noopener" class="ttl2">APA, 2025. Health advisory on chatbots and wellness apps</a><span class="d">Guidance on evidence, safety, dependence and access.</span></span></li>
-      <li><span class="n">15</span><span><a href="https://www.lyrahealth.com/announcement/lyra-health-scales-clinically-vetted-ai-guide-to-members-globally/" target="_blank" rel="noopener" class="ttl2">Lyra Health. AI guide availability</a><span class="d">Company announcement, not independent efficacy evidence.</span></span></li>
-      <li><span class="n">17</span><span><a href="https://www.iesohealth.com/trytherapy" target="_blank" rel="noopener" class="ttl2">Ieso, now Mindler. Therapy service</a><span class="d">Human-delivered typed and video CBT. Became Mindler Ltd in August 2025.</span></span></li>
-      <li><span class="n">18</span><span><a href="https://www.talkspace.com/about-tee" target="_blank" rel="noopener" class="ttl2">Talkspace. About Tee</a><span class="d">Positioning, limits, memory, and the statement on human monitoring.</span></span></li>
-      <li><span class="n">19</span><span><a href="https://coverage.talkspace.com/pricing" target="_blank" rel="noopener" class="ttl2">Talkspace. Pricing</a><span class="d">$19.99 per month, unlimited conversations, after a seven-day trial.</span></span></li>
-      <li><span class="n">20</span><span><a href="https://www.sec.gov/Archives/edgar/data/1803901/000119312526338193/talk-20260630.htm" target="_blank" rel="noopener" class="ttl2">Talkspace SEC filing, mid-2026</a><span class="d">Sentia, training data, and the multi-agent orchestrator.</span></span></li>
-      <li><span class="n">21</span><span><a href="https://business.talkspace.com/ai-products" target="_blank" rel="noopener" class="ttl2">Talkspace for Business. AI products</a><span class="d">Risk detection and the clinician escalation pathway.</span></span></li>
-      <li><span class="n">22</span><span><a href="https://www.sec.gov/Archives/edgar/data/1803901/000119312526105146/talk-20251231.htm" target="_blank" rel="noopener" class="ttl2">Talkspace SEC filing, year-end 2025</a><span class="d">Response evaluation against licensed-therapist standards.</span></span></li>
-      <li><span class="n">—</span><span><span class="ttl2">Cited in the slides without a direct link</span><span class="d">HRSA · FDA · RAND · Brown · Stanford · JAMA and JAMA Pediatrics · Rock Health · Bloomberg Law · FTC · Joint Commission and CHAI · MIT Technology Review · Limbic · King &amp; Spalding · Morrison Foerster · Holland &amp; Knight · Sidley · STAT · OpenAI</span></span></li>
+  <div id="rain" aria-hidden="true"></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Open with the question, not the tech.</b> Ask the room: if you needed help today, how long until you spoke to someone?</li>
+      <li><b>Scope.</b> Five sections: the access gap, what is deployed, the Talkspace Tee case, the evidence, and where regulation is going.</li>
+      <li><b>Controls.</b> Arrows or space to advance. Press N for these notes. Press F for fullscreen.</li>
     </ul>
   </div>
 </section>
 
-</main>
-
-<footer class="end">
-  <div class="in2">
-    <span class="lab">AI in Therapy &nbsp;·&nbsp; Leading in the Age of AI &nbsp;·&nbsp; NYU Stern</span>
-    <span class="cite">Taylor · Yuval · Yonatan · Prasun · Noah</span>
-    <span class="cite">In the U.S., call or text 988 for the Suicide &amp; Crisis Lifeline.</span>
+<!-- ░░ 01 ░░ -->
+<section class="sl" data-nm="The gap">
+  <div class="top"><span class="lab n">01</span><span class="lab dimc">The access gap</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3.4vh,30px)">
+    <div data-s style="--i:0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(16px,4vw,60px)">
+      <span class="fig">59.3<span style="font-size:.42em">M</span></span>
+      <p class="say" style="padding-bottom:min(2vh,18px)">U.S. adults had a mental illness in 2022.<sup>1</sup></p>
+    </div>
+    <div class="hatchbox" data-s style="--i:1">
+      <div class="field100" id="f100" aria-hidden="true"></div>
+      <div class="hb"></div>
+    </div>
+    <div data-s style="--i:2;display:flex;justify-content:space-between;gap:16px">
+      <span class="lab seac">50.6% treated</span>
+      <span class="lab clay">49.4% nothing</span>
+    </div>
   </div>
-</footer>
+  <div class="foot"><span class="lab">1 bar = 1% = 593,000 people</span><span class="lab">NIMH · NSDUH 2022</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>59.3 million</b> U.S. adults had any mental illness in 2022. 50.6% received treatment in the prior year.</li>
+      <li><b>Treatment here means medication or counseling.</b> It is not a measure of unmet demand for AI, and some of that 49.4% were not seeking care.</li>
+      <li><b>Three barriers.</b> Cost and coverage, provider capacity, and the stigma and friction of booking a first appointment.</li>
+      <li><b>Where AI is pointed.</b> Finding care options, intake and workflow support, and a low-pressure first conversation.</li>
+    </ul>
+    <p class="src">NIMH, 2022 NSDUH estimates, updated September 2024 · Source [1]</p>
+  </div>
+</section>
+
+<!-- ░░ 02 ░░ -->
+<section class="sl bone" data-nm="Barriers">
+  <div class="top"><span class="lab n">02</span><span class="lab dimc">Why people do not get care</span><span class="ln"></span></div>
+  <div class="grow">
+    <div class="cols" style="gap:clamp(20px,4vw,70px)">
+      <div class="col" data-s style="--i:0"><h2 class="hd clay">Cost</h2><p class="say sm dimc" style="margin-top:12px">Affordable care is hard to find, and coverage decides who gets seen.</p></div>
+      <div class="col" data-s style="--i:1"><h2 class="hd clay">Capacity</h2><p class="say sm dimc" style="margin-top:12px">Clinician hours are a fixed supply. Every extra session needs a person.</p></div>
+      <div class="col" data-s style="--i:2"><h2 class="hd clay">Stigma</h2><p class="say sm dimc" style="margin-top:12px">Finding a provider and booking the first appointment can feel like too much.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">AI is aimed at the first step, not the treatment</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Cost and coverage.</b> AI is being pointed at helping people find care options they can afford.</li>
+      <li><b>Provider capacity.</b> Roughly 1,600 depressed or anxious patients per U.S. provider. AI is used for intake and workflow, which frees clinician time.</li>
+      <li><b>Stigma and uncertainty.</b> A chatbot is a low-pressure first conversation for someone not ready to call a clinic.</li>
+      <li><b>The honest framing.</b> Make the first step easier and keep a clear path to a human after it.</li>
+    </ul>
+    <p class="src">Sources [1], [6], [7], [12]</p>
+  </div>
+</section>
+
+<!-- ░░ 03 ░░ -->
+<section class="sl" data-nm="Landscape">
+  <div class="top"><span class="lab n">03</span><span class="lab dimc">Deployed today</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3vh,26px)">
+    <h2 class="sub" data-s style="--i:0">Five jobs. Five levels of liability.</h2>
+    <div class="rows">
+      <div class="row" data-s style="--i:1"><span class="r1">Self-help</span><span class="r2">Wysa, Youper</span><span class="r3">Engagement is not clinical benefit</span></div>
+      <div class="row" data-s style="--i:2"><span class="r1">Navigation</span><span class="r2">Limbic, Lyra</span><span class="r3">Still depends on care being available</span></div>
+      <div class="row" data-s style="--i:3"><span class="r1">Clinician support</span><span class="r2">Eleos</span><span class="r3">The clinician stays responsible</span></div>
+      <div class="row" data-s style="--i:4"><span class="r1">Research</span><span class="r2">Therabot trial</span><span class="r3">Lab only, not on the app store</span></div>
+      <div class="row" data-s style="--i:5"><span class="r1">Human, online</span><span class="r2">Ieso, now Mindler</span><span class="r3">Online therapy is not AI therapy</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">Drafting notes and giving advice are not the same product</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Self-help and skills.</b> Wysa and Youper run guided conversations and coping exercises on demand. A helpful interaction does not prove clinical benefit.</li>
+      <li><b>Care navigation.</b> Limbic and Lyra's AI guide handle intake, guidance and referral in front of a care system.</li>
+      <li><b>Clinician support.</b> Eleos drafts notes and session feedback for a clinician to review.</li>
+      <li><b>Treatment research.</b> The Therabot trial is AI-led therapeutic dialogue inside a clinical study, n=210.</li>
+      <li><b>Human-led digital care.</b> Ieso, now Mindler, is a human therapist delivering CBT online. It gets miscounted as AI care.</li>
+      <li><b>The line to hold.</b> Product features and user engagement do not establish clinical effectiveness.</li>
+    </ul>
+    <p class="src">Sources [3], [4], [5], [6], [7], [15], [17]</p>
+  </div>
+</section>
+
+<!-- ░░ 04 ░░ -->
+<section class="sl dark" data-nm="Tee">
+  <div class="top"><span class="lab n">04</span><span class="lab dimc">Case example · Talkspace</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3vh,28px)">
+    <p class="lab" data-s style="--i:0">Tee, Talkspace’s AI mental-health guide</p>
+    <div data-s style="--i:1;display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(14px,4vw,56px)">
+      <span class="fig">$19<span style="font-size:.42em">.99</span></span>
+      <p class="say" style="padding-bottom:min(2.4vh,22px)">A month. Unlimited conversations, any hour, after a seven-day trial.<sup>19</sup></p>
+    </div>
+    <p class="sub" data-s style="--i:2">A guide.<br>Not a licensed therapist.</p>
+  </div>
+  <div class="foot"><span class="lab">Speak or type · It remembers the last conversation</span><span class="lab">Talkspace</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>What it is.</b> A private place to talk through stress, relationships, anxiety or a hard decision, 24/7, by voice or text.</li>
+      <li><b>Pricing.</b> $19.99 a month, unlimited, after a seven-day free trial. Talkspace's human therapy plans cost substantially more.</li>
+      <li><b>Positioning.</b> Talkspace does not call Tee a licensed therapist. It is a guide, with a path to professional care when someone needs more.</li>
+      <li><b>Session shape.</b> Understand the concern, set a focus, explore what is underneath, apply a CBT-based exercise, reflect. More structure than a general chatbot.</li>
+      <li><b>Memory.</b> It remembers previous conversations and builds on them, so the fifth conversation is not a cold start.</li>
+    </ul>
+    <p class="src">Talkspace pricing and About Tee · Sources [18], [19]</p>
+  </div>
+</section>
+
+<!-- ░░ 05 ░░ -->
+<section class="sl dark" data-nm="Two paths">
+  <div class="top"><span class="lab n">05</span><span class="lab dimc">The business-model insight</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(2.6vh,24px)">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between">
+      <h2 class="sub" data-s style="--i:0">Four gates, or none.</h2>
+      <button class="btn" id="runpaths" type="button" data-s style="--i:1"><span id="plab">Run both paths</span></button>
+    </div>
+    <div class="paths" id="paths" data-s style="--i:2">
+      <div class="pth trad">
+        <p class="lab dimc" style="margin-bottom:10px">Traditional route</p>
+        <div class="gate"><span class="mk">01</span><span class="g">You notice you need help</span></div>
+        <div class="gate"><span class="mk">02</span><span class="g">Find a provider taking patients</span></div>
+        <div class="gate"><span class="mk">03</span><span class="g">Wait for an opening</span></div>
+        <div class="gate"><span class="mk">04</span><span class="g">Pay for clinician time</span></div>
+        <div class="gate"><span class="mk">05</span><span class="g">First conversation</span></div>
+        <div class="verdict"><span class="v clay">Gated by capacity</span></div>
+      </div>
+      <div class="pth tee">
+        <p class="lab dimc" style="margin-bottom:10px">With Tee</p>
+        <div class="gate"><span class="mk">01</span><span class="g">You notice you need help</span></div>
+        <div class="gate"><span class="mk">02</span><span class="g">Open the app</span></div>
+        <div class="gate"><span class="mk">03</span><span class="g">First conversation</span></div>
+        <div class="verdict"><span class="v" style="color:#7FD9C4">No queue, flat price</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">It commoditizes one layer of support, not therapy</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>The constraint.</b> Traditional therapy is bounded by clinician time. Every extra appointment needs capacity, scheduling and payment.</li>
+      <li><b>What Tee separates.</b> The supportive-conversation layer comes out of that constraint and gets priced like software.</li>
+      <li><b>What it does not commoditize.</b> Diagnosis, formal treatment, crisis management and complex clinical judgment stay with licensed professionals.</li>
+      <li><b>The new ladder.</b> No support, then AI-guided support, then licensed therapy and psychiatry. Tee is the middle rung that did not exist.</li>
+      <li><b>Say the number.</b> $19.99 a month against human therapy plans that cost substantially more out of pocket.</li>
+    </ul>
+    <p class="src">Talkspace pricing · Source [19]</p>
+  </div>
+</section>
+
+<!-- ░░ 06 ░░ -->
+<section class="sl" data-nm="The new rung">
+  <div class="top"><span class="lab n">06</span><span class="lab dimc">Where it sits</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3vh,26px)">
+    <h2 class="sub" data-s style="--i:0">A rung that was not there.</h2>
+    <div class="ladder">
+      <div class="rung" data-s style="--i:1"><span class="lab dimc">Before</span><span class="t">No support</span></div>
+      <div class="rung mid" data-s style="--i:2"><span class="lab">New</span><span class="t">AI-guided support</span><span class="sm">$19.99 / month, unlimited</span></div>
+      <div class="rung" data-s style="--i:3"><span class="lab dimc">Unchanged</span><span class="t">Licensed therapy</span><span class="sm dimc">Diagnosis, treatment, crisis</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">The question later: who decides when you move right?</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>The point of the slide.</b> Tee does not replace a therapist. It fills the space between nothing and a clinician.</li>
+      <li><b>Why that matters.</b> Most of the 49.4% were never going to reach the third column. The middle rung is cheap enough to reach.</li>
+      <li><b>The risk.</b> A cheap middle rung can also become a place people get parked when they should be escalated. That is the discussion question at the end.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ░░ 07 ░░ -->
+<section class="sl bone" data-nm="How Tee works">
+  <div class="top"><span class="lab n">07</span><span class="lab dimc">Under the conversation</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(2.2vh,20px)">
+    <div style="display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center">
+      <h2 class="sub" data-s style="--i:0;margin-right:auto">Send a message through it.</h2>
+      <button class="pick" id="m-plain" type="button" aria-pressed="true" data-s style="--i:1">Everyday stress</button>
+      <button class="pick alarm" id="m-risk" type="button" aria-pressed="false" data-s style="--i:2">Risk signals</button>
+    </div>
+    <div class="flow" data-s style="--i:3">
+      <div class="blk" id="b1"><span class="bl">01 · Input</span><span class="bt">The person</span><span class="sm dimc" id="b1d">Voice or text, any hour</span></div>
+      <div class="wire" id="w1"><span class="ln"></span><span class="fl"></span></div>
+      <div class="blk" id="b2"><span class="bl">02 · Model</span><span class="bt">Sentia</span><span class="sm dimc">Behavioral-health model trained on millions of patient journeys<sup>20</sup></span></div>
+      <div class="wire" id="w2"><span class="ln"></span><span class="fl"></span></div>
+      <div class="blk" id="b3"><span class="bl">03 · Orchestration</span><span class="bt">Multi-agent</span>
+        <ul class="agents"><li id="a1">Agenda</li><li id="a2">Exploration</li><li id="a3">CBT exercise</li><li id="a4">Memory</li><li id="a5">Risk detection</li></ul>
+      </div>
+      <div class="wire" id="w3"><span class="ln"></span><span class="fl"></span></div>
+      <div class="blk" id="b4"><span class="bl">04 · Output</span><span class="bt">Reply</span><span class="readout" id="readout">Pick a message.</span></div>
+    </div>
+    <div class="escal" id="escal" data-s style="--i:4">
+      <span class="stamp">Flagged for<br>clinician review</span>
+      <p class="sm dimc" style="flex:1 1 300px;max-width:58ch">Risk detection flags the conversation for a licensed supervising clinician, who can open an escalation pathway. Talkspace states there is no real-time human monitoring of every conversation.<sup>18,21</sup></p>
+    </div>
+  </div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Not a general model with a wrapper.</b> Sentia is Talkspace's own behavioral-health model, trained on clinical data from millions of patient journeys, per their SEC filing.</li>
+      <li><b>Multi-agent orchestrator.</b> Several components handle different functions and an orchestration layer decides how they work together. One model call is not doing all of this.</li>
+      <li><b>Quality checks.</b> Talkspace runs systems that evaluate whether a response aligns with what a skilled licensed therapist would say, while still distinguishing Tee from therapy.</li>
+      <li><b>Safety architecture.</b> Automated risk detection plus a human-in-the-loop quality management system. Clinicians are in the monitoring and escalation path.</li>
+      <li><b>Be precise.</b> Clinicians are not watching every conversation in real time. Talkspace says so explicitly.</li>
+    </ul>
+    <p class="src">Talkspace SEC filings, About Tee, Talkspace for Business · Sources [18], [20], [21], [22]</p>
+  </div>
+</section>
+
+<!-- ░░ 08 ░░ -->
+<section class="sl" data-nm="Deploying it">
+  <div class="top"><span class="lab n">08</span><span class="lab dimc">What it takes to do it right</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3.4vh,32px)">
+    <h2 class="sub" data-s style="--i:0">One job. A human behind it.</h2>
+    <div class="cols" style="align-items:flex-end">
+      <div class="col" data-s style="--i:1;flex:2 1 320px">
+        <div class="bars">
+          <div class="bar"><div class="bl"><span class="sm">Clinics using the AI chatbot</span><span class="v seac">+15%</span></div><div class="tr"><i style="--w:1"></i></div></div>
+          <div class="bar b2"><div class="bl"><span class="sm dimc">Clinics without it</span><span class="v dimc">+6%</span></div><div class="tr"><i style="--w:.4"></i></div></div>
+        </div>
+        <p class="lab dimc" style="margin-top:14px">Therapy sign-ups at NHS clinics, 2024<sup>6</sup></p>
+      </div>
+      <div class="col" data-s style="--i:2">
+        <span class="fig" style="font-size:min(9vw,12vh)">1st</span>
+        <p class="sm dimc" style="margin-top:10px;max-width:26ch">That chatbot, Limbic, became the UK’s first approved mental-health AI device, 2023.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">Give it one job · Keep a clinician close · Start in one clinic</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Give it one job.</b> Sign-ups, practice between sessions, or note-taking. Not acting as the therapist.</li>
+      <li><b>Keep a human close.</b> If someone is at risk, a real clinician steps in right away, and the clinician makes the care decisions.</li>
+      <li><b>Start small, then check real results.</b> One clinic first. Are people feeling better and getting care sooner?</li>
+      <li><b>After launch.</b> Test on real patients across ages, languages and backgrounds. Keep monitoring and report problems. Protect the data and limit vendor use. Train staff on when not to trust it.</li>
+      <li><b>Include everyone.</b> Other languages, and options for people without smartphones.</li>
+      <li><b>Seven areas</b> experts say to check before deploying, privacy, safety and bias among them. Joint Commission and CHAI, 2025.</li>
+    </ul>
+    <p class="src">Nature Medicine · MIT Technology Review · Limbic · Joint Commission and CHAI · APA · Source [6]</p>
+  </div>
+</section>
+
+<!-- ░░ 09 ░░ -->
+<section class="sl dark" data-nm="Ethics and law">
+  <div class="top"><span class="lab n">09</span><span class="lab dimc">Ethical and legal concerns</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(2.4vh,22px)">
+    <p class="lab dimc" data-s style="--i:0">Four questions every tool has to answer</p>
+    <h2 class="hd" data-s style="--i:1">Do they know<br>it is a bot?</h2>
+    <div class="rows" style="margin-top:min(2vh,16px)">
+      <div class="row" data-s style="--i:2"><span class="r1">Privacy</span><span class="r2">HIPAA mostly does not cover apps</span><span class="r3">Can your chats train the model?</span></div>
+      <div class="row" data-s style="--i:3"><span class="r1">Harm</span><span class="r2">Bias, and bots that always agree</span><span class="r3">FTC asked 7 firms about kids, 2025</span></div>
+      <div class="row" data-s style="--i:4"><span class="r1">Blame</span><span class="r2">FDA only acts on treatment claims</span><span class="r3">Company, therapist, or clinic?</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">APA · FTC · FDA · Joint Commission and CHAI</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Disclosure.</b> Always tell people they are talking to a bot. Get permission before recording a session for AI notes. State what it cannot do and where crisis help is.</li>
+      <li><b>Privacy.</b> HIPAA, the main U.S. health privacy law, mostly does not cover apps. Since 2024 the FTC requires health apps to report data leaks. The open question is training and advertising use.</li>
+      <li><b>Harm.</b> Models trained mostly on English, Western data misread other cultures. A bot that always agrees can reinforce a harmful thought. In 2025 the FTC asked seven AI companies, OpenAI and Meta included, how they protect children.</li>
+      <li><b>Accountability.</b> The FDA only steps in when an app claims to treat an illness, so professional bodies like the APA are setting the standards instead.</li>
+    </ul>
+    <p class="src">APA · Joint Commission and CHAI · FTC · FDA · King &amp; Spalding · Morrison Foerster · Source [12]</p>
+  </div>
+</section>
+
+<!-- ░░ 10 ░░ -->
+<section class="sl" data-nm="Evidence">
+  <div class="top"><span class="lab n">10</span><span class="lab dimc">What the evidence says</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3vh,26px)">
+    <div data-s style="--i:0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(16px,4vw,60px)">
+      <span class="fig clay">0</span>
+      <p class="say" style="padding-bottom:min(2.4vh,22px)">Generative-AI mental-health devices authorized by the FDA.<br><span class="dimc sm">As of November 2025.</span></p>
+    </div>
+    <div class="trio">
+      <div data-s style="--i:1"><span class="n seac">137M</span><span class="sm dimc">Americans in a mental-health shortage area</span></div>
+      <div data-s style="--i:2"><span class="n seac">51%</span><span class="sm dimc">Self-reported symptom drop in the first gen-AI RCT, n=210<sup>3</sup></span></div>
+      <div data-s style="--i:3"><span class="n clay">16%</span><span class="sm dimc">Of that evidence base had follow-up. Anxiety benefit unproven</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">Promising, self-reported, and not approved as treatment</span><span class="lab">HRSA · NEJM AI · FDA</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>The upside.</b> Roughly 1,600 depressed or anxious patients per U.S. provider. A bot is available at 2am, costs little, and has no waitlist.</li>
+      <li><b>Therabot RCT.</b> n=210, large effects against a waitlist control, d≈0.9 depression and 0.8 anxiety, all self-reported.</li>
+      <li><b>Meta-analysis.</b> 14 RCTs, n=6,314, moderate pooled effect on depression, g≈0.5, with wide error bars.</li>
+      <li><b>Engagement.</b> People start sessions themselves, often at night, and rate the bond on par with human therapists.</li>
+      <li><b>Clinician support works too.</b> AI note-taking cut burnout 21 points across 1,430 clinicians in general medicine. Administrative, not clinical.</li>
+      <li><b>The catch.</b> Self-reported outcomes, waitlist controls, about 16% with follow-up, and zero FDA-authorized devices in the category.</li>
+    </ul>
+    <p class="src">HRSA · NEJM AI · JMIR · FDA · Source [3]</p>
+  </div>
+</section>
+
+<!-- ░░ 11 ░░ -->
+<section class="sl dark" data-nm="Where it fails">
+  <div class="top"><span class="lab n">11</span><span class="lab dimc">Where it fails</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3vh,28px)">
+    <h2 class="hd clay" data-s style="--i:0">It cannot<br>grade risk.</h2>
+    <div class="cols">
+      <div class="col" data-s style="--i:1"><p class="lab clay">Crisis</p><p class="sm dimc" style="margin-top:8px;max-width:30ch">Bots have listed tall bridges to a user who had just lost a job. Newer models did no better.</p></div>
+      <div class="col" data-s style="--i:2"><p class="lab clay">Courts</p><p class="sm dimc" style="margin-top:8px;max-width:30ch">Character.AI and Google settling five teen suits. OpenAI faces Raine and seven more.</p></div>
+      <div class="col" data-s style="--i:3"><p class="lab clay">Law</p><p class="sm dimc" style="margin-top:8px;max-width:30ch">Illinois bans AI therapy at $10k per violation. Nevada bans it. Utah requires disclosure.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">RAND: bots cannot grade mid-level suicide risk</span><span class="lab">Stanford · Brown · RAND · Bloomberg Law</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>RAND.</b> Bots answer clearly low-risk and clearly high-risk questions reasonably, and fail in the middle, which is where most real cases sit.</li>
+      <li><b>Brown.</b> Fifteen distinct ethical risks catalogued in AI mental-health use.</li>
+      <li><b>Lawsuits, January 2026.</b> Character.AI and Google settling five teen suits. OpenAI faces the Raine case and seven more.</li>
+      <li><b>The distinction to draw.</b> These suits are about general chatbots used for mental-health support with no clinical design, not about products like Tee that route risk to a clinician.</li>
+      <li><b>Privacy enforcement.</b> BetterHelp paid a $7.8M FTC privacy fine.</li>
+    </ul>
+    <p class="src">Stanford · Brown · RAND · JAMA · Bloomberg Law · FTC</p>
+  </div>
+</section>
+
+<!-- ░░ 12 ░░ -->
+<section class="sl sea" data-nm="Outlook">
+  <div class="top"><span class="lab n">12</span><span class="lab dimc">Where the industry is going</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3vh,28px)">
+    <h2 class="hd" data-s style="--i:0">Augment is winning.<br>Replace is lab-bound.</h2>
+    <div class="trio" style="border-top-color:var(--rule-inv)">
+      <div data-s style="--i:1"><span class="n">$14.2B</span><span class="sm dimc">U.S. digital-health venture funding in 2025. AI took 54%</span></div>
+      <div data-s style="--i:2"><span class="n">71→44%</span><span class="sm dimc">Psychologists who never use AI, falling</span></div>
+      <div data-s style="--i:3"><span class="n">0</span><span class="sm dimc">Medicare policies on AI reimbursement</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">APA, WHO and UK regulators: support, do not replace</span><span class="lab">Rock Health · FDA · APA</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Capital.</b> $14.2B across 482 U.S. digital-health deals in 2025, up 35%, with AI taking 54% of the dollars. Market sizing is noisy: about $1.7B to $1.8B today against a vendor claim of $64B.</li>
+      <li><b>Purpose-built models.</b> Slingshot AI raised $93M for its therapy model Ash after a 50,000-user beta.</li>
+      <li><b>Regulators drew lanes.</b> Zero FDA authorizations, but the TEMPO pilot admitted its first AI therapy firm in 2026. States drew "not a therapist" lines. EU high-risk duties slip to 2027 and 2028.</li>
+      <li><b>Frontier labs became crisis responders.</b> OpenAI says 0.15% of weekly users show signs of suicidal planning. Character.AI barred under-18s in November 2025. 19% of U.S. youth ask chatbots for mental-health advice.</li>
+      <li><b>Augment is what ships.</b> Lyra, Spring Health and Talkspace route at-risk users to clinicians. Therabot is research-only and Woebot shut down in 2025.</li>
+      <li><b>2027 watchlist.</b> A first FDA authorization or TEMPO readouts, California chatbot reporting in July, EU rules in December, consolidated ChatGPT litigation, and Medicare on reimbursement.</li>
+    </ul>
+    <p class="src">Rock Health · FDA · Holland &amp; Knight · OpenAI · JAMA Pediatrics · APA · Sidley · STAT</p>
+  </div>
+</section>
+
+<!-- ░░ 13 ░░ -->
+<section class="sl" data-nm="The question">
+  <div class="top"><span class="lab n">13</span><span class="lab dimc">Discussion</span><span class="ln"></span></div>
+  <div class="grow" style="gap:min(3.4vh,30px)">
+    <h2 class="hd" data-s style="--i:0;max-width:18ch">Who decides<br>when you move up?</h2>
+    <div class="cols">
+      <div class="col" data-s style="--i:1"><p class="lab clay">The user</p><p class="sm dimc" style="margin-top:8px;max-width:28ch">The person in the worst shape is the least likely to escalate.</p></div>
+      <div class="col" data-s style="--i:2"><p class="lab clay">The risk model</p><p class="sm dimc" style="margin-top:8px;max-width:28ch">The company selling the subscription sets the threshold.</p></div>
+      <div class="col" data-s style="--i:3"><p class="lab clay">The payer</p><p class="sm dimc" style="margin-top:8px;max-width:28ch">Medicare has no AI policy, so the cheap layer stays out of pocket.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="lab">Tee has no waitlist and costs $19.99 a month</span></div>
+  <div class="nt">
+    <ul class="nb">
+      <li><b>Frame it.</b> If an AI guide is good enough for the first conversation, who decides when someone moves up to a licensed clinician?</li>
+      <li><b>The user decides.</b> People already self-triage and a tool with no queue lowers the cost of asking early. But the person in the worst shape is the least likely to escalate, and the business earns more while they stay.</li>
+      <li><b>The risk model decides.</b> It reads every conversation and the escalation path exists. But RAND found these models cannot grade mid-level risk, and the vendor sets the threshold.</li>
+      <li><b>The payer decides.</b> Insurers can require a human after N sessions. But Medicare has no AI reimbursement policy, so incentives run to the cheapest option.</li>
+      <li><b>Our take.</b> AI is good at conversation, paperwork and routing, and weak at judging risk. What works in 2026 picks one job and keeps a clinician attached to it.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ░░ 14 ░░ -->
+<section class="sl bone" data-nm="Sources">
+  <div class="top"><span class="lab n">14</span><span class="lab dimc">References</span><span class="ln"></span></div>
+  <div class="grow" style="min-height:0">
+    <ul class="refs">
+      <li><span class="n">01</span><span class="t"><a href="https://www.nimh.nih.gov/health/statistics/mental-illness" target="_blank" rel="noopener">NIMH, Mental Illness statistics</a><span class="d">2022 NSDUH estimates, updated Sept 2024</span></span></li>
+      <li><span class="n">03</span><span class="t"><a href="https://ai.nejm.org/doi/full/10.1056/AIoa2400802" target="_blank" rel="noopener">Heinz et al., 2025. Therabot RCT</a><span class="d">NEJM AI, n=210</span></span></li>
+      <li><span class="n">04</span><span class="t"><a href="https://www.jmir.org/2021/6/e26771" target="_blank" rel="noopener">Mehta et al., 2021. Youper study</a><span class="d">JMIR 23(6), e26771</span></span></li>
+      <li><span class="n">05</span><span class="t"><a href="https://mhealth.jmir.org/2018/11/e12106/" target="_blank" rel="noopener">Inkster et al., 2018. Wysa evaluation</a><span class="d">JMIR mHealth 6(11), e12106</span></span></li>
+      <li><span class="n">06</span><span class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/38317020/" target="_blank" rel="noopener">Habicht et al., 2024. Self-referral chatbot</a><span class="d">Nature Medicine 30, 595 to 602</span></span></li>
+      <li><span class="n">07</span><span class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/37428547/" target="_blank" rel="noopener">Sadeh-Sharvit et al., 2023. Eleos RCT</a><span class="d">JMIR 25, e46781</span></span></li>
+      <li><span class="n">12</span><span class="t"><a href="https://www.apa.org/topics/artificial-intelligence-machine-learning/health-advisory-chatbots-wellness-apps" target="_blank" rel="noopener">APA, 2025. Advisory on chatbots</a><span class="d">Evidence, safety, dependence, access</span></span></li>
+      <li><span class="n">15</span><span class="t"><a href="https://www.lyrahealth.com/announcement/lyra-health-scales-clinically-vetted-ai-guide-to-members-globally/" target="_blank" rel="noopener">Lyra Health. AI guide</a><span class="d">Company announcement</span></span></li>
+      <li><span class="n">17</span><span class="t"><a href="https://www.iesohealth.com/trytherapy" target="_blank" rel="noopener">Ieso, now Mindler</a><span class="d">Human-delivered typed and video CBT</span></span></li>
+      <li><span class="n">18</span><span class="t"><a href="https://www.talkspace.com/about-tee" target="_blank" rel="noopener">Talkspace. About Tee</a><span class="d">Positioning, memory, monitoring</span></span></li>
+      <li><span class="n">19</span><span class="t"><a href="https://coverage.talkspace.com/pricing" target="_blank" rel="noopener">Talkspace. Pricing</a><span class="d">$19.99 / month after a 7-day trial</span></span></li>
+      <li><span class="n">20</span><span class="t"><a href="https://www.sec.gov/Archives/edgar/data/1803901/000119312526338193/talk-20260630.htm" target="_blank" rel="noopener">Talkspace SEC filing, mid-2026</a><span class="d">Sentia and the multi-agent orchestrator</span></span></li>
+      <li><span class="n">21</span><span class="t"><a href="https://business.talkspace.com/ai-products" target="_blank" rel="noopener">Talkspace for Business. AI products</a><span class="d">Risk detection and escalation</span></span></li>
+      <li><span class="n">22</span><span class="t"><a href="https://www.sec.gov/Archives/edgar/data/1803901/000119312526105146/talk-20251231.htm" target="_blank" rel="noopener">Talkspace SEC filing, 2025</a><span class="d">Response evaluation standards</span></span></li>
+      <li><span class="n">—</span><span class="t">Also cited<span class="d">HRSA · FDA · RAND · Brown · Stanford · JAMA · Rock Health · Bloomberg Law · FTC · Joint Commission and CHAI · MIT Technology Review · Limbic · Holland &amp; Knight · Sidley · STAT · OpenAI</span></span></li>
+    </ul>
+  </div>
+  <div class="foot"><span class="lab">In the U.S., call or text 988 for the Suicide &amp; Crisis Lifeline</span></div>
+  <div class="nt"><ul class="nb"><li><b>Close here.</b> Thank the room, then open the discussion question from the previous slide.</li></ul></div>
+</section>
+
+</div>
+
+<nav id="hud">
+  <span class="ct"><b id="cur">01</b> / <span id="tot">15</span></span>
+  <span class="nm" id="nm">Title</span>
+  <span class="rt">
+    <button id="notesBtn" type="button">Notes · N</button>
+    <button id="prev" type="button" aria-label="Previous">←</button>
+    <button id="next" type="button" aria-label="Next">→</button>
+  </span>
+</nav>
+
+<aside id="notes" aria-live="polite">
+  <h4 id="nTitle">Speaker notes</h4>
+  <div id="nBody"></div>
+</aside>
 
 <script>
 (() => {
   "use strict";
-  const root = document.documentElement;
-  const rm = matchMedia("(prefers-reduced-motion: reduce)");
   const $ = (s, c) => (c || document).querySelector(s);
   const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
-  const clamp01 = (t) => (t < 0 ? 0 : t > 1 ? 1 : t);
+  const rm = matchMedia("(prefers-reduced-motion: reduce)");
+  const slides = $$(".sl");
+  const hud = { cur: $("#cur"), tot: $("#tot"), nm: $("#nm") };
+  const notes = $("#notes"), nBody = $("#nBody"), nTitle = $("#nTitle");
+  const barI = $("#bar i");
+  let i = 0, notesOpen = false;
 
-  root.classList.add("anim");
+  hud.tot.textContent = String(slides.length).padStart(2, "0");
 
-  /* ── reveal: one idiom, masked lines rising ─────────────────── */
-  const io = new IntersectionObserver((es) => {
-    es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("vis"); io.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
-  $$("section .in").forEach((el) => io.observe(el));
-  const io2 = new IntersectionObserver((es) => {
-    es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("vis"); io2.unobserve(e.target); } });
-  }, { threshold: 0.35 });
-  $$(".bars, .watch, .qbig, .figs").forEach((el) => io2.observe(el));
-
-  /* ── running head + progress ────────────────────────────────── */
-  const secs = $$("section.field");
-  const rh = $("#rh"), rhs = $("#rhs"), prog = $("#prog i");
-  let cur = 0;
-  const si = new IntersectionObserver((es) => {
-    let best = null;
-    es.forEach((e) => { if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) best = e; });
-    if (!best) return;
-    cur = secs.indexOf(best.target);
-    rhs.textContent = best.target.dataset.sec;
-    rh.classList.toggle("onfield", best.target.hasAttribute("data-dark"));
-  }, { threshold: [0.2, 0.45, 0.7] });
-  secs.forEach((s) => si.observe(s));
-  let raf = 0;
-  addEventListener("scroll", () => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = 0;
-      const h = document.documentElement.scrollHeight - innerHeight;
-      prog.style.transform = "scaleX(" + (h > 0 ? clamp01(scrollY / h) : 0) + ")";
-    });
-  }, { passive: true });
-
-  addEventListener("keydown", (e) => {
-    if (e.target && e.target.closest("button, a, input, textarea, select")) return;
-    let d = 0;
-    if (["ArrowDown", "PageDown", " ", "ArrowRight"].indexOf(e.key) >= 0) d = 1;
-    else if (["ArrowUp", "PageUp", "ArrowLeft"].indexOf(e.key) >= 0) d = -1;
-    else if (e.key === "Home") { secs[0].scrollIntoView(); return; }
-    else if (e.key === "End") { secs[secs.length - 1].scrollIntoView(); return; }
-    if (!d) return;
-    e.preventDefault();
-    const n = Math.max(0, Math.min(secs.length - 1, cur + d));
-    secs[n].scrollIntoView({ block: "start" });
-  });
-
-  /* ── the tally band ─────────────────────────────────────────── */
-  const tally = $("#tally");
-  if (tally) {
+  /* falling bars in the hero */
+  const rain = $("#rain");
+  if (rain) {
+    const n = innerWidth < 700 ? 34 : 64;
     const f = document.createDocumentFragment();
-    for (let k = 0; k < 100; k++) {
-      const i = document.createElement("i");
-      i.style.setProperty("--k", String(k));
-      if (k >= 51) i.className = "off";
-      f.appendChild(i);
+    for (let k = 0; k < n; k++) {
+      const b = document.createElement("i");
+      const h = 18 + Math.round(Math.abs(Math.sin(k * 1.7)) * 46 + (k % 7) * 5);
+      b.style.height = h + "%";
+      b.style.setProperty("--k", String(k));
+      if (k % 9 === 4) b.className = "c";
+      f.appendChild(b);
     }
-    tally.appendChild(f);
-    new IntersectionObserver((es, o) => {
-      es.forEach((e) => { if (e.isIntersecting) { tally.classList.add("go"); o.disconnect(); } });
-    }, { threshold: 0.4 }).observe(tally);
+    rain.appendChild(f);
   }
 
-  /* ── counters ───────────────────────────────────────────────── */
-  const ci = new IntersectionObserver((es) => {
-    es.forEach((e) => {
-      if (!e.isIntersecting) return;
-      ci.unobserve(e.target);
-      const el = e.target, to = parseFloat(el.dataset.count) || 0, suf = el.dataset.suffix || "";
-      if (rm.matches || !to) { el.textContent = to + suf; return; }
-      const t0 = performance.now();
-      const tick = (t) => {
-        const p = clamp01((t - t0) / 900);
-        el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + suf;
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-  }, { threshold: 0.6 });
-  $$("[data-count]").forEach((el) => ci.observe(el));
+  /* 100 bars for the gap */
+  const f100 = $("#f100");
+  if (f100) {
+    const f = document.createDocumentFragment();
+    for (let k = 0; k < 100; k++) {
+      const b = document.createElement("i");
+      b.style.setProperty("--k", String(k));
+      if (k >= 51) b.className = "off";
+      f.appendChild(b);
+    }
+    f100.appendChild(f);
+  }
 
-  /* ── cancellable timers ─────────────────────────────────────── */
+  /* ── slide engine ───────────────────────────────────────────── */
+  const onEnter = [];
+  function show(n, force) {
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    if (!force && n === i && slides[i].classList.contains("on")) return;
+    const old = slides[i];
+    if (old !== slides[n]) {
+      old.classList.remove("on");
+      old.classList.add("out");
+      setTimeout(() => old.classList.remove("out"), 380);
+    }
+    i = n;
+    const s = slides[i];
+    void s.offsetWidth;
+    s.classList.add("on");
+    document.body.classList.remove("dark", "sea", "bone");
+    if (s.classList.contains("dark")) document.body.classList.add("dark");
+    if (s.classList.contains("sea")) document.body.classList.add("sea");
+    if (s.classList.contains("bone")) document.body.classList.add("bone");
+    hud.cur.textContent = String(i + 1).padStart(2, "0");
+    hud.nm.textContent = s.dataset.nm || "";
+    barI.style.transform = "scaleX(" + ((i + 1) / slides.length) + ")";
+    const nt = $(".nt", s);
+    nBody.innerHTML = nt ? nt.innerHTML : "<p class='sm'>No notes for this slide.</p>";
+    nTitle.textContent = "Speaker notes · " + (s.dataset.nm || "");
+    onEnter.forEach((fn) => fn(i));
+    try { history.replaceState(null, "", "#" + (i + 1)); } catch (e) {}
+  }
+  const next = () => show(i + 1);
+  const prev = () => show(i - 1);
+
+  $("#next").addEventListener("click", next);
+  $("#prev").addEventListener("click", prev);
+  $("#go").addEventListener("click", next);
+
+  function toggleNotes(force) {
+    notesOpen = typeof force === "boolean" ? force : !notesOpen;
+    notes.classList.toggle("open", notesOpen);
+  }
+  $("#notesBtn").addEventListener("click", () => toggleNotes());
+
+  addEventListener("keydown", (e) => {
+    const k = e.key;
+    if (k === "n" || k === "N") { toggleNotes(); return; }
+    if (k === "Escape") { toggleNotes(false); return; }
+    if (k === "f" || k === "F") {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      else document.exitFullscreen && document.exitFullscreen();
+      return;
+    }
+    if (e.target && e.target.closest("button, a, input")) return;
+    if (k === "ArrowRight" || k === "PageDown" || k === " " || k === "ArrowDown") { e.preventDefault(); next(); }
+    else if (k === "ArrowLeft" || k === "PageUp" || k === "ArrowUp") { e.preventDefault(); prev(); }
+    else if (k === "Home") show(0);
+    else if (k === "End") show(slides.length - 1);
+  });
+
+  $("#deck").addEventListener("click", (e) => {
+    if (e.target.closest("button, a, .refs, .nt, .flow, .paths, .escal")) return;
+    if (getSelection && String(getSelection()).length) return;
+    next();
+  });
+
+  let tx = 0, ty = 0;
+  addEventListener("touchstart", (e) => { tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY; }, { passive: true });
+  addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
+  }, { passive: true });
+
+  /* ── timers ─────────────────────────────────────────────────── */
   const timer = () => { const ids = []; return { at: (f, ms) => ids.push(setTimeout(f, rm.matches ? 0 : ms)), clear: () => { ids.forEach(clearTimeout); ids.length = 0; } }; };
 
-  /* ── the two paths ──────────────────────────────────────────── */
-  const pBtn = $("#runpaths"), pLab = $("#pathslab");
-  const trad = $$(".path.trad .gate"), tee = $$(".path.tee .gate");
-  const rTrad = $(".path.trad .result"), rTee = $(".path.tee .result");
+  /* ── two paths ──────────────────────────────────────────────── */
+  const pBtn = $("#runpaths"), pLab = $("#plab");
+  const trad = $$(".pth.trad .gate"), tee = $$(".pth.tee .gate");
+  const vTrad = $(".pth.trad .verdict"), vTee = $(".pth.tee .verdict");
   const pt = timer();
-  let running = false;
-  const runPaths = () => {
+  function runPaths() {
     pt.clear();
     trad.concat(tee).forEach((g) => g.classList.remove("on"));
-    rTrad.classList.remove("on"); rTee.classList.remove("on");
-    running = true; pBtn.disabled = true; pLab.textContent = "Running";
-    trad.forEach((g, i) => pt.at(() => g.classList.add("on"), i * 780));
-    pt.at(() => rTrad.classList.add("on"), trad.length * 780 + 120);
-    tee.forEach((g, i) => pt.at(() => g.classList.add("on"), i * 300));
-    pt.at(() => rTee.classList.add("on"), tee.length * 300 + 120);
-    pt.at(() => { pBtn.disabled = false; pLab.textContent = "Run it again"; running = false; }, trad.length * 780 + 400);
-  };
+    vTrad.classList.remove("on"); vTee.classList.remove("on");
+    pBtn.disabled = true; pLab.textContent = "Running";
+    trad.forEach((g, k) => pt.at(() => g.classList.add("on"), k * 760));
+    pt.at(() => vTrad.classList.add("on"), trad.length * 760 + 100);
+    tee.forEach((g, k) => pt.at(() => g.classList.add("on"), k * 290));
+    pt.at(() => vTee.classList.add("on"), tee.length * 290 + 100);
+    pt.at(() => { pBtn.disabled = false; pLab.textContent = "Run it again"; }, trad.length * 760 + 360);
+  }
   pBtn.addEventListener("click", runPaths);
-  new IntersectionObserver((es, o) => {
-    es.forEach((e) => { if (e.isIntersecting && !running) { o.disconnect(); setTimeout(runPaths, 420); } });
-  }, { threshold: 0.45 }).observe($("#paths"));
+  const pathsIdx = slides.indexOf($("#paths").closest(".sl"));
+  onEnter.push((n) => { if (n === pathsIdx) setTimeout(runPaths, 520); else pt.clear(); });
 
-  /* ── the block diagram ──────────────────────────────────────── */
-  const sBtn = $("#runsim"), sLab = $("#simlab");
+  /* ── pipeline ───────────────────────────────────────────────── */
+  const B = ["b1", "b2", "b3", "b4"].map((x) => $("#" + x));
+  const W = ["w1", "w2", "w3"].map((x) => $("#" + x));
+  const A = ["a1", "a2", "a3", "a4", "a5"].map((x) => $("#" + x));
+  const escal = $("#escal"), readout = $("#readout"), b1d = $("#b1d");
   const plainBtn = $("#m-plain"), riskBtn = $("#m-risk");
-  const B = ["b1", "b2", "b3", "b4"].map((i) => $("#" + i));
-  const W = ["w1", "w2", "w3"].map((i) => $("#" + i));
-  const A = ["a1", "a2", "a3", "a4", "a5"].map((i) => $("#" + i));
-  const escal = $("#escal"), escl = $("#escl"), readout = $("#readout"), b1d = $("#b1d");
   const st = timer();
   let mode = "plain";
   const TEXT = {
-    plain: "Tee sets a focus with you, works through what is underneath it, and offers a CBT-based exercise. Next time, it starts from this conversation.",
-    risk: "Tee responds, surfaces crisis resources, and the conversation is flagged for a licensed supervising clinician to review."
+    plain: "It sets a focus, works through what is underneath, and offers a CBT-based exercise. Next time it starts from here.",
+    risk: "It responds, surfaces crisis resources, and the conversation is flagged for a licensed supervising clinician."
   };
-  const reset = () => {
+  function resetSim() {
     st.clear();
     B.forEach((b) => b.classList.remove("lit", "flag"));
     W.forEach((w) => w.classList.remove("on"));
     A.forEach((a) => a.classList.remove("on", "hot"));
     escal.classList.remove("live");
-    escl.textContent = "Escalation path · idle";
-    readout.textContent = "Press send.";
-  };
-  const setMode = (m) => {
-    mode = m;
-    plainBtn.setAttribute("aria-pressed", m === "plain" ? "true" : "false");
-    riskBtn.setAttribute("aria-pressed", m === "risk" ? "true" : "false");
-    b1d.textContent = m === "risk" ? "This message carries risk signals" : "Voice or text, any hour";
-  };
-  function runSim() {
-    reset();
-    sBtn.disabled = true; sLab.textContent = "Sending";
-    const risk = mode === "risk";
-    st.at(() => B[0].classList.add("lit"), 60);
-    st.at(() => W[0].classList.add("on"), 280);
-    st.at(() => B[1].classList.add("lit"), 660);
-    st.at(() => W[1].classList.add("on"), 860);
-    st.at(() => B[2].classList.add("lit"), 1240);
-    if (risk) {
-      st.at(() => A[4].classList.add("hot"), 1400);
-      st.at(() => { escal.classList.add("live"); escl.textContent = "Escalation path · flagged"; }, 1720);
-      st.at(() => { A[0].classList.add("on"); A[1].classList.add("on"); }, 2000);
-    } else {
-      [0, 1, 2, 3].forEach((k, i) => st.at(() => A[k].classList.add("on"), 1400 + i * 150));
-    }
-    const end = risk ? 2300 : 2050;
-    st.at(() => W[2].classList.add("on"), end);
-    st.at(() => {
-      B[3].classList.add(risk ? "flag" : "lit");
-      readout.textContent = TEXT[mode];
-      sBtn.disabled = false; sLab.textContent = "Send again";
-    }, end + 320);
+    readout.textContent = "Pick a message.";
   }
-  sBtn.addEventListener("click", runSim);
-  plainBtn.addEventListener("click", () => { setMode("plain"); runSim(); });
-  riskBtn.addEventListener("click", () => { setMode("risk"); runSim(); });
-  new IntersectionObserver((es, o) => {
-    es.forEach((e) => { if (e.isIntersecting) { o.disconnect(); setTimeout(runSim, 480); } });
-  }, { threshold: 0.4 }).observe($(".diag"));
+  function runSim() {
+    resetSim();
+    const risk = mode === "risk";
+    b1d.textContent = risk ? "This message carries risk signals" : "Voice or text, any hour";
+    plainBtn.setAttribute("aria-pressed", risk ? "false" : "true");
+    riskBtn.setAttribute("aria-pressed", risk ? "true" : "false");
+    st.at(() => B[0].classList.add("lit"), 60);
+    st.at(() => W[0].classList.add("on"), 260);
+    st.at(() => B[1].classList.add("lit"), 620);
+    st.at(() => W[1].classList.add("on"), 820);
+    st.at(() => B[2].classList.add("lit"), 1180);
+    if (risk) {
+      st.at(() => A[4].classList.add("hot"), 1340);
+      st.at(() => escal.classList.add("live"), 1640);
+      st.at(() => { A[0].classList.add("on"); A[1].classList.add("on"); }, 1900);
+    } else {
+      [0, 1, 2, 3].forEach((k, j) => st.at(() => A[k].classList.add("on"), 1340 + j * 140));
+    }
+    const end = risk ? 2200 : 1960;
+    st.at(() => W[2].classList.add("on"), end);
+    st.at(() => { B[3].classList.add(risk ? "flag" : "lit"); readout.textContent = TEXT[mode]; }, end + 300);
+  }
+  plainBtn.addEventListener("click", () => { mode = "plain"; runSim(); });
+  riskBtn.addEventListener("click", () => { mode = "risk"; runSim(); });
+  const simIdx = slides.indexOf(escal.closest(".sl"));
+  onEnter.push((n) => { if (n === simIdx) { mode = "plain"; setTimeout(runSim, 560); } else { st.clear(); } });
+
+  /* ── boot ───────────────────────────────────────────────────── */
+  let start = 0;
+  try { const h = parseInt(location.hash.replace("#", ""), 10); if (h >= 1 && h <= slides.length) start = h - 1; } catch (e) {}
+  i = start;
+  show(start, true);
 })();
 </script>
 </body>
